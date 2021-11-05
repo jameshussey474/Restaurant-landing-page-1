@@ -1,0 +1,693 @@
+/*CSS Style for Restaurant Landing Page "index.html"*/
+
+/******************************************************************************
+	Table of Contents
+	-----------------
+	1. Global Styles
+		1.1 -- :root (pseudo-class)
+        1.2 -- :is(*, ::before, ::after)
+        1.3 -- body
+        1.4 -- img
+        1.5 -- input, select
+        1.6 -- button
+        1.7 -- main
+
+	2. main__header
+        2.1 -- header-section
+        2.2 -- header-side-section
+        2.3 -- header-logo
+        2.4 -- header-phone
+        2.5 -- header-reservation
+
+	3. main__nav
+        3.1 -- main__nav
+            3.1.1 -- .main__nav::before
+            3.1.2 -- .main__nav:hover::before
+        3.2 -- hamburger
+        3.3 -- header-menu
+        3.4 -- menu-open
+            3.4.1 -- .menu-open li 
+        3.5 -- .header-menu__items
+            3.5.1 -- .header-menu__items a
+        3.6.1 -- .sub-menu > a:first-child::after
+            3.6.2 -- .sub-menu:hover > a:first-child::after
+            3.6.3 -- .sub-menu:hover .sub-menu__extend
+        3.7.1 -- .sub-menu__extend
+            3.7.2 -- .sub-menu__extend li
+            3.7.3 -- .sub-menu__extend li:nth-child(2)
+            3.7.4 -- .sub-menu__extend li:nth-child(3)
+            3.7.5 -- .sub-menu__extend li:nth-child(4)
+        3.8 -- li:hover .sub-menu__extend, li:focus .sub-menu__extend, .sub-menu-open 
+        
+	4. main__content
+
+        4.1 -- main__content
+        4.2 -- .slider-image
+        4.3 -- .main__welcome-section
+            4.3.1 -- .main__welcome-section > *
+        4.4 -- .welcome-article
+            4.4.1 -- .welcome-article *
+        4.5 -- .welcome-title
+            4.5.1 -- .welcome-text
+        4.6 -- .main__reservation-section
+            4.6.1 -- .main__reservation-section *
+        4.7 -- .reservation-article
+        4.8 -- Classes represent grid-areas within reservation-article
+
+    5. main__footer
+        5.1 -- 
+
+    6. Utility Classes
+        6.1 -- .spread-cols
+        6.2 -- .reduce-input-width
+
+    7. Animation
+        7.1 -- @keyframes rollDown 
+
+*******************************************************************************/
+
+/******************************************************************************
+1. Global Styles
+******************************************************************************/
+
+/* 1.1  Declares custom variables for the html document*/
+:root {
+    /* General property declarations */
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+    /* note: both Google only fonts have 400 and 700 options */
+    --font-1: "Tangerine", cursive;
+    --font-2: "Philosopher", sans-serif;
+    /* Custom colours */
+    --black-1: hsl(0, 0%, 0%);
+    --grey-19: hsl(0, 0%, 19%);
+    --grey-43: hsl(0, 0%, 33%);
+    --white-1: hsl(0, 0%, 100%);
+    /* Custom sizing */
+    --half-em: 0.5em;
+    --quarter-em: 0.25em;
+}
+
+/* 1.2 Rules the universal selector and basic pseudo classes to defined global styles*/
+:is(*, ::before, ::after) {
+    box-sizing: inherit;
+    color: var(--white-1);
+    font-family: var(--font-1);
+    margin: 0;
+    padding: 0;
+}
+
+/* 1.3 Sets some default values for the body tag */
+body {
+    background-color: var(--grey-43);
+    margin-top: 0;
+}
+
+/* 1.4 Sets a max width for all images */
+img {
+    max-width: 100%;
+}
+
+/* 1.5 sets some default colors for text with user input */
+input,
+select {
+    color: var(--black-1);
+}
+
+/* 1.6 defaults for buttons on the page */
+button {
+    background-color: var(--grey-19);
+    border: solid 1px var(--white-1);
+    border-radius: var(--quarter-em);
+    color: var(--white-1);
+    font-family: var(--font-2);
+    cursor: pointer;
+    padding: var(--half-em) 0.75em;
+}
+
+/* 1.7 Apply a default global style to all html <h2> tags to use this font*/
+h2 {
+    font-family: var(--font-2);
+    font-size: 1.25rem;
+}
+
+/* 1.7 The largest div will need to be sticky positioned in order for the main__nav section to work on mobile viewports */
+.main {
+    position: relative;
+}
+
+/******************************************************************************
+2. main__header
+******************************************************************************/
+
+/* 2.1 */
+.header-section {
+    background-color: var(--grey-19);
+    display: flex;
+    justify-content: space-around;
+    padding: 1em 2em;
+    text-align: center;
+}
+
+/* 2.2 */
+.header-side-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin-left: 2em;
+}
+
+/* 2.3 */
+.header-logo {
+    /* https://looka.com/editor/75934574 for more colours of grey need be*/
+}
+
+/* 2.4 add some minor letter spacing for readability */
+.header-phone {
+    font-family: var(--font-2);
+    letter-spacing: 0.1em;
+}
+
+/* 2.5 */
+.header-reservation {
+}
+
+/* media query for desktop */
+/* .header-reservation:hover {
+    box-shadow: 0em 0em 1em 0.3em var(--grey-43);
+} */
+
+/******************************************************************************
+3. main__nav
+******************************************************************************/
+
+/* 3.1 This section stays sticky for mobile viewports for easier UI */
+.main__nav {
+    background-color: var(--grey-19);
+    margin-top: -1em;
+    padding-bottom: var(--quarter-em);
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 10; /*Force this element to always be interactive over any other elements of the page, especially for reservation-article or iframe map*/
+}
+
+/* 3.1.1 hovering effect for desktop (style for black bar fixme:!!!) */
+.main__nav::before {
+    background-color: var(--white-1);
+    bottom: 0;
+    box-shadow: 0 0px 10px var(--white-1);
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    transform: scaleX(0);
+    transition: transform 300ms ease-in-out;
+}
+
+/* 3.1.2 */
+.main__nav:hover::before {
+    transform: scaleX(1);
+}
+
+/* 3.2 Needs position relative to be brought up into the header when the page initially loads */
+.hamburger {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    margin: 0 auto;
+    padding: var(--half-em) var(--half-em) 0 var(--half-em);
+    position: relative;
+}
+
+/* 3.3 Hides the main nav items by default */
+.header-menu {
+    display: none;
+}
+
+/* 3.4 JavaScript toggles this class to display the main__nav section */
+.menu-open {
+    display: block;
+}
+
+/* 3.4.1  */
+.menu-open li {
+    list-style: none;
+    padding-top: var(--half-em);
+}
+
+/* 3.5 */
+.header-menu__items {
+    animation: dropDown 0.75s cubic-bezier(0.68, -0.55, 0, 1.32); /*customer bezier function gives a "bounce" effect at the end of the animation*/
+    display: flex;
+    justify-content: space-around;
+    margin: 0 1em;
+}
+
+/* 3.5.1 */
+.header-menu__items a {
+    text-decoration: none;
+}
+
+.header-menu__items > li {
+    padding-top: var(--quarter-em);
+}
+
+/* 3.6.3 Desktop hover on certain nav elements displays their sub-menu items*/
+.sub-menu:hover .sub-menu__extend {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 3.7.1 Default hidden until the parent li is hovered or clicked */
+.sub-menu__extend {
+    display: none;
+}
+
+/* 3.7.2 */
+.sub-menu__extend li {
+    animation: rollDown 0.1s linear backwards;
+}
+
+/* 3.7.3 */
+.sub-menu__extend li:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+/* 3.7.4 */
+.sub-menu__extend li:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+/* 3.7.5 */
+.sub-menu__extend li:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+/* 3.8 Desktop media query as well as toggling class in JavaScript*/
+li:hover .sub-menu__extend,
+li:focus .sub-menu__extend,
+.sub-menu-open {
+    display: flex;
+    flex-direction: column;
+}
+
+/******************************************************************************
+4. main__content
+******************************************************************************/
+
+/* 4.1 */
+.main__content {
+    /* padding: 0 2em; */
+}
+
+/* 4.2 Hide all slideshow images by default */
+.slider-image {
+    background-size: contain;
+    display: none;
+    /* Force the images to have the same dimensions for a more seamless slideshow */
+    max-height: 15em;
+    min-width: 100%;
+}
+
+/* 4.3 */
+.main__welcome-section {
+    background-image: url(img/food1.jpg);
+    background-size: cover;
+}
+
+/* 4.4 */
+.welcome-article {
+    padding: 2em var(--half-em) 2em 14em;
+}
+
+/* 4.4.1 */
+.welcome-article * {
+    color: var(--black-1);
+    font-size: 1.25rem;
+    text-align: center;
+}
+
+/* 4.5 */
+.welcome-title {
+    font-weight: 700;
+}
+
+/* 4.5.1 */
+.welcome-text {
+    margin-top: 1em;
+}
+
+/* 4.6 */
+.main__reservation-section {
+    background-image: url(img/white-2.jpg);
+    background-size: cover;
+    padding: 5em 2em;
+}
+
+/* 4.6.1 */
+.main__reservation-section * {
+    font-family: var(--font-2);
+}
+
+/* 4.7 */
+.reservation-article {
+    background-color: var(--grey-19);
+    box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-1);
+    display: grid;
+    gap: 1em;
+    grid-template-areas:
+        "reservation-title ."
+        "reservation-guests reservation-guests-input"
+        "reservation-date reservation-date-input"
+        "reservation-time reservation-time-input"
+        "reservation-name reservation-name-input"
+        "reservation-phone reservation-phone-input"
+        "reservation-submit ."
+        "reservation-text .";
+    opacity: 0.7;
+    padding: 1em var(--half-em);
+}
+
+/* Start 4.8 -- All the below selectors represent a specific grid item of the reservation-article element*/
+.reservation-title {
+    grid-area: reservation-title;
+}
+
+.reservation-guests {
+    grid-area: reservation-guests;
+}
+
+#reservation-guests {
+    grid-area: reservation-guests-input;
+}
+
+.reservation-date {
+    grid-area: reservation-date;
+}
+
+#reservation-date {
+    grid-area: reservation-date-input;
+}
+
+.reservation-time {
+    grid-area: reservation-time;
+}
+
+#reservation-time {
+    background-color: var(--white-1);
+    grid-area: reservation-time-input;
+}
+
+.reservation-name {
+    grid-area: reservation-name;
+}
+
+.reservation-name-input {
+    grid-area: reservation-name-input;
+}
+
+.reservation-phone {
+    grid-area: reservation-phone;
+}
+
+.reservation-phone-input {
+    grid-area: reservation-phone-input;
+}
+
+.reservation-text {
+    font-size: 0.8rem;
+    grid-area: reservation-text;
+}
+
+.reservation-submit {
+    background-color: var(--white-1);
+    color: var(--black-1);
+    font-size: 1rem;
+    grid-area: reservation-submit;
+    margin: 1em 1em;
+}
+/* End 4.8 */
+
+/* 4.9 */
+.main__menu-section {
+    display: grid;
+    gap: var(--quarter-em);
+    grid-template-areas:
+        "menu-article ."
+        "image-1 image-2"
+        ". image-3"
+        "image-4 .";
+    padding-bottom: var(--quarter-em);
+}
+
+.menu-article {
+    font-size: 1.5rem;
+    grid-area: menu-article;
+    grid-column: 1 / -1;
+    padding: 1em;
+}
+
+.menu-title {
+    padding-bottom: 1em;
+}
+
+.menu-title,
+.menu-text {
+    text-shadow: 1px 1px 1px var(--grey-19);
+}
+
+/* todo: for mobile, these images should be an obvious link to the corresponding menu! */
+
+.image-1 {
+    grid-area: image-1;
+    grid-row: 2 / span 2;
+    padding-left: var(--quarter-em);
+}
+
+.image-2 {
+    grid-area: image-2;
+    min-height: 100%;
+    padding-right: var(--quarter-em);
+}
+
+.image-3 {
+    grid-area: image-3;
+    min-height: 100%;
+    padding-right: var(--quarter-em);
+}
+
+.image-4 {
+    grid-area: image-4;
+    grid-column: 1 / -1;
+    padding: 0 var(--quarter-em);
+}
+
+/* easily select multiple grid items for media query */
+/* [class*="image-"] {
+    opacity: 0.5;
+}
+
+[class*="image-"]:hover {
+    opacity: 1;
+} */
+
+[class*="image-"]::after {
+    content: "";
+    height: 8px;
+    width: 8px;
+    display: block;
+    background-color: red;
+}
+
+/* ||| */
+.main__private-dining-section {
+    background-image: url(img/private-dining.jpg);
+    background-size: cover;
+    padding: 5em 2em;
+}
+
+.private-dining-article {
+    background-color: var(--grey-19);
+    box-shadow: -0.5em 0.5em 0.5em black;
+    opacity: 0.7;
+    padding: 1em;
+}
+
+.private-dining-title,
+.private-dining-text {
+    padding-bottom: 1em;
+    text-shadow: 1px 1px 1px var(--black-1);
+}
+
+/* ||| */
+.main__hours-section {
+    background-image: url(img/clock.jpg);
+    background-size: cover;
+}
+
+.hours-article {
+    padding: 1em;
+    width: 70%;
+}
+
+.main__hours-section * {
+    color: var(--black-1);
+}
+
+.hours-aside {
+    font-size: 1.5rem;
+}
+
+.hours-title {
+    padding-bottom: 1em;
+}
+
+.hours-grid {
+    display: grid;
+    grid-template-columns: 3fr 2fr;
+}
+
+.main__bottom-section {
+    display: flex;
+    flex-direction: column;
+}
+
+/* todo: this breakpoint needs to be used in JS to stop growing the iframe */
+@media (min-width: 35em) {
+    .main__bottom-section {
+        flex-direction: row;
+    }
+}
+
+.main__bottom-section > section {
+    flex: 1;
+}
+
+.iframe {
+    border: none;
+    padding: 0 1em 1em 1em;
+}
+
+.map-title {
+    padding: var(--half-em);
+    text-align: center;
+}
+
+.gift-card-section {
+    background-image: url(img/present.jpg);
+    background-size: cover;
+    font-size: 1.5rem;
+    padding: 2em;
+    text-shadow: 1px 1px 1px var(--black-1);
+}
+
+.inner-gift-card-section {
+    align-items: center;
+    background-color: var(--grey-19);
+    box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-1);
+    display: flex;
+    flex-direction: column;
+    opacity: 0.7;
+    padding: 1em 0;
+}
+
+.gift-card-text {
+    padding: 1em 2em;
+    text-align: center;
+}
+
+/******************************************************************************
+5. main__footer
+******************************************************************************/
+
+.main__footer {
+    background-color: var(--black-1);
+}
+
+.main__footer * {
+    font-family: var(--font-2);
+}
+
+.footer-section {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-logo {
+    padding-bottom: 2em;
+}
+
+.footer,
+.social-media {
+    list-style: none;
+    display: flex;
+}
+
+.footer {
+    align-items: center;
+    flex-direction: column;
+}
+
+.footer li {
+    padding-top: var(--quarter-em);
+}
+
+.social-media {
+    display: flex;
+    padding: 2em 0;
+}
+
+.social-media li {
+    padding: 0 1em;
+}
+
+.main__footer span {
+    font-size: 0.6rem;
+    background-color: var(--grey-43);
+    display: block;
+}
+
+/******************************************************************************
+6. Utility Classes
+******************************************************************************/
+
+/* 6.1 Applies to some elements within the reservation-article as a utility class to cover multiple grid tracks */
+.spread-cols {
+    grid-column: 1 / 3;
+    text-align: center;
+}
+
+/* 6.2 Another utility class for reservation-article grid items for readability. The reason for this class is to easily adjust the width for all targeted element simultaneously. */
+.reduce-input-width {
+    justify-self: center;
+    width: 100%;
+}
+
+/******************************************************************************
+7. Animation
+******************************************************************************/
+
+/* The header-menu__items element will use this animation to "drop" onto the page with style*/
+@keyframes dropDown {
+    0% {
+        transform: translateY(-9em);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+/* 7.1 elements will be "hidden" by the 90deg start position but will become fully visible after the animation is done*/
+@keyframes rollDown {
+    0% {
+        transform: rotateX(90deg);
+    }
+    100% {
+        transform: rotateX(0deg);
+    }
+}
