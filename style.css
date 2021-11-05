@@ -128,7 +128,7 @@ button {
 /* 1.7 Apply a default global style to all html <h2> tags to use this font*/
 h2 {
     font-family: var(--font-2);
-    font-size: 1.25rem;
+    font-size: 2rem;
 }
 
 /* 1.7 The largest div will need to be sticky positioned in order for the main__nav section to work on mobile viewports */
@@ -217,9 +217,9 @@ h2 {
     border: none;
     cursor: pointer;
     display: block;
-    font-size: 1em;
+    font-size: 2.5em;
     margin: 0 auto;
-    padding: var(--half-em) var(--half-em) 0 var(--half-em);
+    padding: 0 var(--half-em);
     position: relative;
 }
 
@@ -241,10 +241,9 @@ h2 {
 
 /* 3.5 */
 .header-menu__items {
-    animation: dropDown 0.75s cubic-bezier(0.68, -0.55, 0, 1.32); /*customer bezier function gives a "bounce" effect at the end of the animation*/
+    animation: dropDown 0.75s cubic-bezier(0.68, -0.55, 0, 1.32); /*custom bezier function gives a "bounce" effect at the end of the animation*/
     display: flex;
     justify-content: space-around;
-    margin: 0 1em;
 }
 
 /* 3.5.1 */
@@ -253,7 +252,9 @@ h2 {
 }
 
 .header-menu__items > li {
+    font-size: 2rem;
     padding-top: var(--quarter-em);
+    text-shadow: 1px 1px 1px var(--black-1);
 }
 
 /* 3.6.3 Desktop hover on certain nav elements displays their sub-menu items*/
@@ -321,24 +322,21 @@ li:focus .sub-menu__extend,
 
 /* 4.4 */
 .welcome-article {
-    padding: 2em var(--half-em) 2em 14em;
+    padding: 1em var(--half-em) 1em 13em;
 }
 
 /* 4.4.1 */
-.welcome-article * {
+.welcome-text {
     color: var(--black-1);
-    font-size: 1.25rem;
+    font-size: 1.5rem;
+    margin-top: 1em;
     text-align: center;
 }
 
 /* 4.5 */
 .welcome-title {
-    font-weight: 700;
-}
-
-/* 4.5.1 */
-.welcome-text {
-    margin-top: 1em;
+    color: var(--black-1);
+    text-align: center;
 }
 
 /* 4.6 */
@@ -523,6 +521,10 @@ li:focus .sub-menu__extend,
     text-shadow: 1px 1px 1px var(--black-1);
 }
 
+.private-dining-text {
+    font-size: 1.5rem;
+}
+
 /* ||| */
 .main__hours-section {
     background-image: url(img/clock.jpg);
@@ -530,8 +532,8 @@ li:focus .sub-menu__extend,
 }
 
 .hours-article {
-    padding: 1em;
-    width: 70%;
+    padding: 2em;
+    width: 90%;
 }
 
 .main__hours-section * {
@@ -548,7 +550,8 @@ li:focus .sub-menu__extend,
 
 .hours-grid {
     display: grid;
-    grid-template-columns: 3fr 2fr;
+    gap: var(--quarter-em);
+    grid-template-columns: 2fr 3fr;
 }
 
 .main__bottom-section {
@@ -650,6 +653,7 @@ li:focus .sub-menu__extend,
     font-size: 0.6rem;
     background-color: var(--grey-43);
     display: block;
+    padding-left: 2em;
 }
 
 /******************************************************************************
