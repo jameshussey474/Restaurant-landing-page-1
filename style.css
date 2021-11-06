@@ -80,9 +80,13 @@
     --font-2: "Philosopher", sans-serif;
     /* Custom colours */
     --black-1: hsl(0, 0%, 0%);
+    --black-1-op: rgba(0, 0, 0, 0.5);
     --grey-19: hsl(0, 0%, 19%);
+    --grey-19-op: rgba(48, 48, 48, 0.7);
     --grey-43: hsl(0, 0%, 33%);
+    --grey-43-op: rgba(84, 84, 84, 0.7);
     --white-1: hsl(0, 0%, 100%);
+    --white-1-op: rgba(255, 255, 255, 0.5);
     /* Custom sizing */
     --half-em: 0.5em;
     --quarter-em: 0.25em;
@@ -185,7 +189,6 @@ h2 {
 .main__nav {
     background-color: var(--grey-19);
     margin-top: -1em;
-    padding-bottom: var(--quarter-em);
     position: sticky;
     position: -webkit-sticky;
     top: 0;
@@ -309,20 +312,32 @@ li:focus .sub-menu__extend,
 .slider-image {
     background-size: contain;
     display: none;
-    /* Force the images to have the same dimensions for a more seamless slideshow */
-    max-height: 15em;
+    /* Force the images to have the same height for a more seamless slideshow */
+    min-height: 20em;
     min-width: 100%;
 }
 
 /* 4.3 */
 .main__welcome-section {
-    background-image: url(img/food1.jpg);
+    background-image: linear-gradient(180deg, var(--white-1-op), var(--white-1-op)),
+        url(img/food4.jpg);
     background-size: cover;
+    background-position: center;
+}
+
+/* ||| */
+.main__welcome-section,
+.main__reservation-section,
+.main__private-dining-section,
+.main__hours-section,
+.bottom-section__map,
+.gift-card-section,
+.footer-section {
+    padding: 8em 4em;
 }
 
 /* 4.4 */
 .welcome-article {
-    padding: 1em var(--half-em) 1em 13em;
 }
 
 /* 4.4.1 */
@@ -343,7 +358,8 @@ li:focus .sub-menu__extend,
 .main__reservation-section {
     background-image: url(img/white-2.jpg);
     background-size: cover;
-    padding: 5em 2em;
+    background-position: center;
+    padding: 10em 2em;
 }
 
 /* 4.6.1 */
@@ -505,7 +521,7 @@ li:focus .sub-menu__extend,
 .main__private-dining-section {
     background-image: url(img/private-dining.jpg);
     background-size: cover;
-    padding: 5em 2em;
+    background-position: center;
 }
 
 .private-dining-article {
@@ -529,11 +545,7 @@ li:focus .sub-menu__extend,
 .main__hours-section {
     background-image: url(img/clock.jpg);
     background-size: cover;
-}
-
-.hours-article {
-    padding: 2em;
-    width: 90%;
+    background-position: center;
 }
 
 .main__hours-section * {
@@ -570,6 +582,13 @@ li:focus .sub-menu__extend,
     flex: 1;
 }
 
+.bottom-section__map {
+    background-image: url(img/drive-2.jpg);
+    background-size: cover;
+    background-position: center;
+    padding: 4em 2em;
+}
+
 .iframe {
     border: none;
     padding: 0 1em 1em 1em;
@@ -583,8 +602,9 @@ li:focus .sub-menu__extend,
 .gift-card-section {
     background-image: url(img/present.jpg);
     background-size: cover;
+    background-position: center;
     font-size: 1.5rem;
-    padding: 2em;
+    padding: 4em 2em; /*half of the other sections' padding*/
     text-shadow: 1px 1px 1px var(--black-1);
 }
 
@@ -619,10 +639,12 @@ li:focus .sub-menu__extend,
     align-items: center;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    padding: 4em 2em; /*half of the other elements' padding*/
 }
 
-.footer-logo {
-    padding-bottom: 2em;
+.footer-section > * {
+    margin-top: 1em;
 }
 
 .footer,
@@ -646,6 +668,7 @@ li:focus .sub-menu__extend,
 }
 
 .social-media li {
+    font-size: 2rem;
     padding: 0 1em;
 }
 
