@@ -79,8 +79,8 @@
     --font-1: "Tangerine", cursive;
     --font-2: "Philosopher", sans-serif;
     /* Custom colours */
-    --black-1: hsl(0, 0%, 0%);
-    --black-1-op: rgba(0, 0, 0, 0.5);
+    --black-3: hsl(0, 0%, 3%);
+    --black-3-op: rgba(0, 0, 3, 0.5);
     --grey-19: hsl(0, 0%, 19%);
     --grey-19-op: rgba(48, 48, 48, 0.7);
     --grey-43: hsl(0, 0%, 33%);
@@ -115,7 +115,7 @@ img {
 /* 1.5 sets some default colors for text with user input */
 input,
 select {
-    color: var(--black-1);
+    color: var(--black-3);
 }
 
 /* 1.6 defaults for buttons on the page */
@@ -256,8 +256,8 @@ h2 {
 
 .header-menu__items > li {
     font-size: 2rem;
-    padding-top: var(--quarter-em);
-    text-shadow: 1px 1px 1px var(--black-1);
+    padding: var(--quarter-em) 0;
+    text-shadow: 1px 1px 1px var(--black-3);
 }
 
 /* 3.6.3 Desktop hover on certain nav elements displays their sub-menu items*/
@@ -342,15 +342,19 @@ li:focus .sub-menu__extend,
 
 /* 4.4.1 */
 .welcome-text {
-    color: var(--black-1);
-    font-size: 1.5rem;
+    color: var(--black-3);
     margin-top: 1em;
     text-align: center;
 }
 
+[class*="-text"] {
+    font-weight: 700;
+    font-size: 1.75rem;
+}
+
 /* 4.5 */
 .welcome-title {
-    color: var(--black-1);
+    color: var(--black-3);
     text-align: center;
 }
 
@@ -370,7 +374,7 @@ li:focus .sub-menu__extend,
 /* 4.7 */
 .reservation-article {
     background-color: var(--grey-19);
-    box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-1);
+    box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-3);
     display: grid;
     gap: 1em;
     grid-template-areas:
@@ -439,7 +443,7 @@ li:focus .sub-menu__extend,
 
 .reservation-submit {
     background-color: var(--white-1);
-    color: var(--black-1);
+    color: var(--black-3);
     font-size: 1rem;
     grid-area: reservation-submit;
     margin: 1em 1em;
@@ -447,22 +451,22 @@ li:focus .sub-menu__extend,
 /* End 4.8 */
 
 /* 4.9 */
-.main__menu-section {
+.menu-grid {
     display: grid;
-    gap: var(--quarter-em);
+    gap: 1em;
     grid-template-areas:
-        "menu-article ."
-        "image-1 image-2"
-        ". image-3"
-        "image-4 .";
-    padding-bottom: var(--quarter-em);
+        "image-1"
+        "image-2"
+        "image-3"
+        "image-4";
+    grid-auto-rows: 1fr; /*since the first image is very skinny, make all rows of the grid the same*/
+    margin-bottom: 1.5em;
+    padding: 8em 1em;
 }
 
 .menu-article {
     font-size: 1.5rem;
-    grid-area: menu-article;
-    grid-column: 1 / -1;
-    padding: 1em;
+    padding: 1em 1em 0 1em;
 }
 
 .menu-title {
@@ -478,26 +482,24 @@ li:focus .sub-menu__extend,
 
 .image-1 {
     grid-area: image-1;
-    grid-row: 2 / span 2;
-    padding-left: var(--quarter-em);
 }
 
 .image-2 {
     grid-area: image-2;
-    min-height: 100%;
-    padding-right: var(--quarter-em);
 }
 
 .image-3 {
     grid-area: image-3;
-    min-height: 100%;
-    padding-right: var(--quarter-em);
 }
 
 .image-4 {
     grid-area: image-4;
-    grid-column: 1 / -1;
-    padding: 0 var(--quarter-em);
+}
+
+/* Force all images of the menu-grid to be the height of their grid-row, but also make their images cover as not to be stretched*/
+.menu-grid img {
+    object-fit: cover;
+    min-height: 100%;
 }
 
 /* easily select multiple grid items for media query */
@@ -509,13 +511,14 @@ li:focus .sub-menu__extend,
     opacity: 1;
 } */
 
+/* 
 [class*="image-"]::after {
     content: "";
     height: 8px;
     width: 8px;
     display: block;
     background-color: red;
-}
+} */
 
 /* ||| */
 .main__private-dining-section {
@@ -534,7 +537,7 @@ li:focus .sub-menu__extend,
 .private-dining-title,
 .private-dining-text {
     padding-bottom: 1em;
-    text-shadow: 1px 1px 1px var(--black-1);
+    text-shadow: 1px 1px 1px var(--black-3);
 }
 
 .private-dining-text {
@@ -549,7 +552,7 @@ li:focus .sub-menu__extend,
 }
 
 .main__hours-section * {
-    color: var(--black-1);
+    color: var(--black-3);
 }
 
 .hours-aside {
@@ -605,13 +608,13 @@ li:focus .sub-menu__extend,
     background-position: center;
     font-size: 1.5rem;
     padding: 4em 2em; /*half of the other sections' padding*/
-    text-shadow: 1px 1px 1px var(--black-1);
+    text-shadow: 1px 1px 1px var(--black-3);
 }
 
 .inner-gift-card-section {
     align-items: center;
     background-color: var(--grey-19);
-    box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-1);
+    box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-3);
     display: flex;
     flex-direction: column;
     opacity: 0.7;
@@ -628,7 +631,7 @@ li:focus .sub-menu__extend,
 ******************************************************************************/
 
 .main__footer {
-    background-color: var(--black-1);
+    background-color: var(--black-3);
 }
 
 .main__footer * {
