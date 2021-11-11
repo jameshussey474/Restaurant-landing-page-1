@@ -51,8 +51,8 @@
             4.5.1 -- .welcome-text
         4.6 -- .main__reservation-section
             4.6.1 -- .main__reservation-section *
-        4.7 -- .reservation-article
-        4.8 -- Classes represent grid-areas within reservation-article
+        4.7 -- .reservation-form
+        4.8 -- Classes represent grid-areas within reservation-form
 
     5. main__footer
         5.1 -- 
@@ -79,14 +79,16 @@
     --font-1: "Tangerine", cursive;
     --font-2: "Philosopher", sans-serif;
     /* Custom colours */
+    --black-0: hsl(0, 0%, 0%);
     --black-3: hsl(0, 0%, 3%);
     --black-3-op: rgba(0, 0, 3, 0.5);
     --grey-19: hsl(0, 0%, 19%);
     --grey-19-op: rgba(48, 48, 48, 0.7);
     --grey-43: hsl(0, 0%, 33%);
     --grey-43-op: rgba(84, 84, 84, 0.7);
-    --white-1: hsl(0, 0%, 100%);
-    --white-1-op: rgba(255, 255, 255, 0.5);
+    --white-100: hsl(0, 0%, 100%);
+    --white-100-op: rgba(255, 255, 255, 0.5);
+    --white-90: hsl(0, 0%, 90%);
     /* Custom sizing */
     --half-em: 0.5em;
     --quarter-em: 0.25em;
@@ -95,7 +97,7 @@
 /* 1.2 Rules the universal selector and basic pseudo classes to defined global styles*/
 :is(*, ::before, ::after) {
     box-sizing: inherit;
-    color: var(--white-1);
+    color: var(--white-100);
     font-family: var(--font-1);
     margin: 0;
     padding: 0;
@@ -121,9 +123,9 @@ select {
 /* 1.6 defaults for buttons on the page */
 button {
     background-color: var(--grey-19);
-    border: solid 1px var(--white-1);
+    border: solid 1px var(--white-100);
     border-radius: var(--quarter-em);
-    color: var(--white-1);
+    color: var(--white-100);
     font-family: var(--font-2);
     cursor: pointer;
     padding: var(--half-em) 0.75em;
@@ -192,14 +194,14 @@ h2 {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    z-index: 10; /*Force this element to always be interactive over any other elements of the page, especially for reservation-article or iframe map*/
+    z-index: 10; /*Force this element to always be interactive over any other elements of the page, especially for reservation-form or iframe map*/
 }
 
 /* 3.1.1 hovering effect for desktop (style for black bar fixme:!!!) */
 .main__nav::before {
-    background-color: var(--white-1);
+    background-color: var(--white-100);
     bottom: 0;
-    box-shadow: 0 0px 10px var(--white-1);
+    box-shadow: 0 0px 10px var(--white-100);
     content: "";
     height: 2px;
     left: 0;
@@ -291,6 +293,10 @@ h2 {
     animation-delay: 0.4s;
 }
 
+.sub-menu__extend li:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
 /* 3.8 Desktop media query as well as toggling class in JavaScript*/
 li:hover .sub-menu__extend,
 li:focus .sub-menu__extend,
@@ -319,7 +325,7 @@ li:focus .sub-menu__extend,
 
 /* 4.3 */
 .main__welcome-section {
-    background-image: linear-gradient(180deg, var(--white-1-op), var(--white-1-op)),
+    background-image: linear-gradient(180deg, var(--white-100-op), var(--white-100-op)),
         url(img/food4.jpg);
     background-size: cover;
     background-position: center;
@@ -367,12 +373,13 @@ li:focus .sub-menu__extend,
 }
 
 /* 4.6.1 */
-.main__reservation-section * {
+.main__reservation-section *,
+.modal-form * {
     font-family: var(--font-2);
 }
 
 /* 4.7 */
-.reservation-article {
+.reservation-form {
     background-color: var(--grey-19);
     box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-3);
     display: grid;
@@ -384,13 +391,13 @@ li:focus .sub-menu__extend,
         "reservation-time reservation-time-input"
         "reservation-name reservation-name-input"
         "reservation-phone reservation-phone-input"
-        "reservation-submit ."
+        "reservation-button ."
         "reservation-text .";
     opacity: 0.7;
     padding: 1em var(--half-em);
 }
 
-/* Start 4.8 -- All the below selectors represent a specific grid item of the reservation-article element*/
+/* Start 4.8 -- All the below selectors represent a specific grid item of the reservation-form element*/
 .reservation-title {
     grid-area: reservation-title;
 }
@@ -416,7 +423,7 @@ li:focus .sub-menu__extend,
 }
 
 #reservation-time {
-    background-color: var(--white-1);
+    background-color: var(--white-100);
     grid-area: reservation-time-input;
 }
 
@@ -441,11 +448,11 @@ li:focus .sub-menu__extend,
     grid-area: reservation-text;
 }
 
-.reservation-submit {
-    background-color: var(--white-1);
+.reservation-button {
+    background-color: var(--white-100);
     color: var(--black-3);
     font-size: 1rem;
-    grid-area: reservation-submit;
+    grid-area: reservation-button;
     margin: 1em 1em;
 }
 /* End 4.8 */
@@ -458,7 +465,8 @@ li:focus .sub-menu__extend,
         "image-1"
         "image-2"
         "image-3"
-        "image-4";
+        "image-4"
+        "image-5";
     grid-auto-rows: 1fr; /*since the first image is very skinny, make all rows of the grid the same*/
     margin-bottom: 1.5em;
     padding: 8em 1em;
@@ -494,6 +502,10 @@ li:focus .sub-menu__extend,
 
 .image-4 {
     grid-area: image-4;
+}
+
+.image-5 {
+    grid-area: image-5;
 }
 
 /* Force all images of the menu-grid to be the height of their grid-row, but also make their images cover as not to be stretched*/
@@ -589,16 +601,16 @@ li:focus .sub-menu__extend,
     background-image: url(img/drive-2.jpg);
     background-size: cover;
     background-position: center;
+    overflow: hidden;
     padding: 4em 2em;
 }
 
 .iframe {
     border: none;
-    padding: 0 1em 1em 1em;
+    padding: 1em 0 0 0;
 }
 
 .map-title {
-    padding: var(--half-em);
     text-align: center;
 }
 
@@ -631,7 +643,7 @@ li:focus .sub-menu__extend,
 ******************************************************************************/
 
 .main__footer {
-    background-color: var(--black-3);
+    background-color: var(--black-0);
 }
 
 .main__footer * {
@@ -686,13 +698,13 @@ li:focus .sub-menu__extend,
 6. Utility Classes
 ******************************************************************************/
 
-/* 6.1 Applies to some elements within the reservation-article as a utility class to cover multiple grid tracks */
+/* 6.1 Applies to some elements within the reservation-form as a utility class to cover multiple grid tracks */
 .spread-cols {
     grid-column: 1 / 3;
     text-align: center;
 }
 
-/* 6.2 Another utility class for reservation-article grid items for readability. The reason for this class is to easily adjust the width for all targeted element simultaneously. */
+/* 6.2 Another utility class for reservation-form grid items for readability. The reason for this class is to easily adjust the width for all targeted element simultaneously. */
 .reduce-input-width {
     justify-self: center;
     width: 100%;
@@ -720,4 +732,103 @@ li:focus .sub-menu__extend,
     100% {
         transform: rotateX(0deg);
     }
+}
+
+/* Modal container for private dining */
+.modal-container {
+    background-color: var(--black-3-op);
+    bottom: 0;
+    left: 0;
+    place-items: center;
+    position: fixed;
+    right: 0;
+    top: 0;
+    z-index: 20; /*Must be in front of teh main__nav menu when this modal is open*/
+}
+
+.modal-section {
+    background-color: var(--white-90);
+    height: 80%;
+    overflow: auto; /*need scroll bars for the information at the bottom*/
+    width: 80%;
+}
+
+.modal-container * {
+    color: var(--black-3);
+}
+
+.close-private-dining {
+    background-color: var(--white-90);
+    border: none;
+    display: block;
+    padding: 1em 0 0 1em;
+    right: 0;
+}
+
+.close-private-dining i {
+    font-size: 3em;
+}
+
+.modal-article {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.modal-title {
+    padding-top: 1em;
+    text-align: center;
+}
+
+.modal-text {
+    font-size: 1.75rem;
+    font-weight: 700;
+    padding: 1em 1em 0 1em;
+}
+
+.modal-form {
+    align-self: center;
+    display: grid;
+    gap: 1em;
+    grid-template-areas:
+        "private-dining-name private-dining-name-input"
+        "private-dining-phone private-dining-phone-input"
+        "private-dining-email private-dining-email-input"
+        ". private-dining-comments"
+        ". private-dining-comments-input";
+    padding: 2em;
+}
+
+.private-dining-name {
+    grid-area: private-dining-name;
+}
+
+#private-dining-name {
+    grid-area: private-dining-name-input;
+}
+
+.private-dining-phone {
+    grid-area: private-dining-phone;
+}
+
+#private-dining-phone {
+    grid-area: private-dining-phone-input;
+}
+
+.private-dining-email {
+    grid-area: private-dining-email;
+}
+
+#private-dining-email {
+    grid-area: private-dining-email-input;
+}
+
+.private-dining-comments {
+    grid-area: private-dining-comments;
+    grid-column: 1 / 3;
+}
+
+#private-dining-comments {
+    grid-area: private-dining-comments-input;
+    grid-column: 1 / 3;
 }

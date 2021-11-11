@@ -52,16 +52,19 @@
                             <a>Menus</a>
                             <ul class="sub-menu__extend">
                                 <li>
-                                    <a href="./brunch.html">Brunch</a>
+                                    <a href="./menus.html#brunch">Brunch</a>
                                 </li>
                                 <li>
-                                    <a href="./dinner.html">Dinner</a>
+                                    <a href="./menus.html#drinks">Drinks</a>
                                 </li>
                                 <li>
-                                    <a href="./dessert.html">Dessert</a>
+                                    <a href="./menus.html#dinner">Dinner</a>
                                 </li>
                                 <li>
-                                    <a href="./takeout.html">Takeout</a>
+                                    <a href="./menus.html#dessert">Dessert</a>
+                                </li>
+                                <li>
+                                    <a href="./menus.html#takeout">Takeout</a>
                                 </li>
                             </ul>
                         </li>
@@ -108,7 +111,7 @@
                     </article>
                 </section>
                 <section class="main__reservation-section" id="main__reservation-section">
-                    <article class="reservation-article">
+                    <form class="reservation-form">
                         <h2 class="reservation-title spread-cols">Reservation</h2>
                         <label class="reservation-guests" for="reservation-guests">
                             Number of Guests
@@ -137,31 +140,19 @@
                             <option value="20">8pm</option>
                             <option value="21">9pm</option>
                         </select>
-                        <label
-                            for="reservation-name"
-                            class="reservation-name"
-                            for="reservation-name"
-                        >
-                            Name
-                        </label>
+                        <label class="reservation-name" for="reservation-name">Name</label>
                         <input
                             id="reservation-name"
                             class="reservation-name-input reduce-input-width"
                             type="text"
                         />
-                        <label
-                            for="reservation-phone"
-                            class="reservation-phone"
-                            for="reservation-phone"
-                        >
-                            Phone No.
-                        </label>
+                        <label class="reservation-phone" for="reservation-phone">Phone No.</label>
                         <input
                             id="reservation-phone"
                             class="reservation-phone-input reduce-input-width"
                             type="tel"
                         />
-                        <button type="submit" class="reservation-submit spread-cols">
+                        <button type="button" class="reservation-button spread-cols">
                             Reserve
                         </button>
                         <p class="reservation-text spread-cols">
@@ -170,7 +161,7 @@
                             <a href="#main__private-dining-section">private dining experience</a>
                             .
                         </p>
-                    </article>
+                    </form>
                 </section>
                 <section class="main__menu-section">
                     <article class="menu-article">
@@ -185,6 +176,7 @@
                         <img class="image-2" src="img/brunch-closeup.jpg" alt="" />
                         <img class="image-3" src="img/dessert.jpg" alt="" />
                         <img class="image-4" src="img/takeout.jpg" alt="" />
+                        <img class="image-5" src="img/drinks.jpg" alt="" />
                     </div>
                 </section>
                 <section class="main__private-dining-section" id="main__private-dining-section">
@@ -195,9 +187,7 @@
                             temporibus pariatur? In et rerum atque commodi, facilis, quisquam, eius
                             sequi nihil eos fugit officia totam quasi recusandae sint eligendi.
                         </p>
-                        <a href="./private-dining.html">
-                            <button type="submit" class="private-dining-submit">Read More</button>
-                        </a>
+                        <button type="button" class="private-dining-button">Read More</button>
                     </article>
                 </section>
                 <section class="main__hours-section">
@@ -234,7 +224,7 @@
                                 We offer gift cards for that special someone! Starting at just $25,
                                 give someone the perfect meal!
                             </p>
-                            <button type="submit" class="gift-card-submit">Purchase</button>
+                            <button type="button" class="gift-card-button">Purchase</button>
                         </div>
                     </section>
                 </section>
