@@ -6,11 +6,6 @@
 	1. Global Variables
 	2. Event Listeners
 	3. Global Functions
-        3.1 -- getPrice()
-        3.2 -- processingData()
-        3.3 -- revealingData()
-        3.4 -- getServerTime()
-        3.5 -- numberWithCommas()
         
 *******************************************************************************/
 
@@ -25,6 +20,7 @@ const hamburger = document.querySelector(".hamburger");
 const headerMenu = document.querySelector(".header-menu");
 const headerReservation = document.querySelector(".header-reservation");
 const innerSliderImages = document.querySelector(".inner-slider-images");
+const mainHeader = document.querySelector(".main__header");
 const mainNav = document.querySelector(".main__nav");
 const privateDining = document.querySelector(".private-dining-button");
 const subMenuContact = document.querySelector(".sub-menu__contact");
@@ -53,16 +49,17 @@ allTouchCancelEventListeners();
 // Load all click event listeners
 function allClickEventListeners() {
     body.addEventListener("click", closePrivateDiningModal); //event delegation on closePrivateDining variable needs to be handled by the body element
-    hamburger.addEventListener("click", openMenu);
+    body.addEventListener("click", closeOpenMenu); //event delegation to close the main__nav needs to be handled by the body element
+    hamburger.addEventListener("click", toggleMenuOpen);
     privateDining.addEventListener("click", openPrivateDiningModal);
-    subMenuContact.addEventListener("click", openSubMenuContact);
-    subMenuMenus.addEventListener("click", openSubMenuMenus);
+    subMenuContact.addEventListener("click", toggleSubMenuContact);
+    subMenuMenus.addEventListener("click", toggleSubMenuMenus);
 }
 
 // Load all touchcancel event listeners
 function allTouchCancelEventListeners() {
-    subMenuContact.addEventListener("touchcancel", openSubMenuContact);
-    subMenuMenus.addEventListener("touchcancel", openSubMenuMenus);
+    subMenuContact.addEventListener("touchcancel", toggleSubMenuContact);
+    subMenuMenus.addEventListener("touchcancel", toggleSubMenuMenus);
 }
 
 // Load window event listeners
@@ -75,19 +72,17 @@ function loadEventListeners() {
 ******************************************************************************/
 
 // Toggles the "menu-open" class for the navbar
-function openMenu(event) {
+function toggleMenuOpen() {
     headerMenu.classList.toggle("menu-open");
-    event.preventDefault();
 }
 
 // Toggles the "sub-menu-open" for the "sub-menu__menus" element to expose more links below.
-function openSubMenuMenus(event) {
+function toggleSubMenuMenus(event) {
     event.target.parentElement.children[1].classList.toggle("sub-menu-open");
-    // extended.classList.toggle("sub-menu-open");
 }
 
 // Toggles the "sub-menu-open" for the "sub-menu__contact" element to expose more links below.
-function openSubMenuContact(event) {
+function toggleSubMenuContact(event) {
     event.target.parentElement.children[1].classList.toggle("sub-menu-open");
 }
 
@@ -99,8 +94,7 @@ function autoSlideshow() {
     // check if current is at the end of the array and set it to the beginning if true
     current < images.length - 1 ? current++ : (current = 0);
     images[current].style.display = "block";
-    innerSliderImages.style.animation = "rollDown";
-    // have each image show for variable "time" amount of milliseconds
+    // have each image show for "time" amount of milliseconds
     setTimeout(autoSlideshow, time);
 }
 
@@ -160,23 +154,18 @@ function setModalContainerHTML() {
                 Please let us host your special event by filling in the following information.
             </p>
             <form class="modal-form">
-                <label class="private-dining-name" for="private-dining-name">
-                    Name
+                <label class="private-dining-name sr-only" for="private-dining-name">
                 </label>
-                <input id="private-dining-name" class="private-dining-name-input reduce-input-width" type="text"/>
-                <label class="private-dining-phone" for="private-dining-phone">
-                    Phone No.
+                <input id="private-dining-name" class="private-dining-name-input" type="text"placeholder="Name"/>
+                <label class="private-dining-phone sr-only" for="private-dining-phone">
                 </label>
-                <input id="private-dining-phone" class="private-dining-phone-input reduce-input-width" type="tel"/>
-                <label class="private-dining-email" for="private-dining-email">
-                    Email
+                <input id="private-dining-phone" class="private-dining-phone-input" type="tel"placeholder="Phone No."/>
+                <label class="private-dining-email sr-only" for="private-dining-email">
                 </label>
-                <input id="private-dining-email" class="private-dining-email-input reduce-input-width" type="email"/>
-                <label class="private-dining-comments" for="private-dining-comments">
-                    Comments
+                <input id="private-dining-email" class="private-dining-email-input" type="email" placeholder="Email"/>
+                <label class="private-dining-message sr-only" for="private-dining-message">
                 </label>
-                <textarea id="private-dining-comments" class="private-dining-comments-input" rows="10">
-                </textarea>
+                <textarea id="private-dining-message" class="private-dining-message-input" rows="10" placeholder="Tell us about your special event!"></textarea>
             </form>
             <button class="modal-button">
                 Submit
@@ -192,12 +181,13 @@ function closePrivateDiningModal(event) {
     }
 }
 
-// The map needs to have a dynamic sizing depending on the size of screen the user has.
-const iFrame = document.querySelector("iframe");
-let iFrameWidth = window.innerWidth; //grab the value for this elements horizontal padding (ex. 2em) and multiply it by the computed font-size . so 16 * 2 = 32. Since the padding is left and right, multiply by 2 again = 64!
-const bottomSectionMap = document.querySelector(".bottom-section__map");
-let mapPadding = window.getComputedStyle(bottomSectionMap).getPropertyValue(`padding-left`); //get the padding for the bottomSectionMap
-iFrameWidth -= parseInt(mapPadding) * 2;
-console.log(iFrameWidth);
-iFrame.setAttribute("height", iFrameWidth);
-iFrame.setAttribute("width", iFrameWidth);
+// When users click outside of the header-menu element and the class "menu-open" is not active for the header-menu, it will close the menu automatically.
+function closeOpenMenu(event) {
+    if (
+        event.target !== mainNav &&
+        event.target.closest("section") !== mainNav &&
+        headerMenu.classList.contains("menu-open")
+    ) {
+        toggleMenuOpen();
+    }
+}

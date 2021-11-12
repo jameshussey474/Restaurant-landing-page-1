@@ -116,8 +116,10 @@ img {
 
 /* 1.5 sets some default colors for text with user input */
 input,
-select {
+select,
+input::placeholder {
     color: var(--black-3);
+    opacity: 1;
 }
 
 /* 1.6 defaults for buttons on the page */
@@ -382,44 +384,37 @@ li:focus .sub-menu__extend,
 .reservation-form {
     background-color: var(--grey-19);
     box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-3);
+    opacity: 0.7;
+    padding: 1em;
+}
+
+.inner-reservation-form {
     display: grid;
     gap: 1em;
     grid-template-areas:
-        "reservation-title ."
-        "reservation-guests reservation-guests-input"
-        "reservation-date reservation-date-input"
-        "reservation-time reservation-time-input"
-        "reservation-name reservation-name-input"
-        "reservation-phone reservation-phone-input"
-        "reservation-button ."
-        "reservation-text .";
-    opacity: 0.7;
-    padding: 1em var(--half-em);
+        "reservation-title"
+        "reservation-guests-input"
+        "reservation-date-input"
+        "reservation-time-input"
+        "reservation-name-input"
+        "reservation-phone-input"
+        "reservation-button"
+        "reservation-text";
+    padding: 1em 2em;
 }
 
 /* Start 4.8 -- All the below selectors represent a specific grid item of the reservation-form element*/
 .reservation-title {
     grid-area: reservation-title;
-}
-
-.reservation-guests {
-    grid-area: reservation-guests;
+    text-align: center;
 }
 
 #reservation-guests {
     grid-area: reservation-guests-input;
 }
 
-.reservation-date {
-    grid-area: reservation-date;
-}
-
 #reservation-date {
     grid-area: reservation-date-input;
-}
-
-.reservation-time {
-    grid-area: reservation-time;
 }
 
 #reservation-time {
@@ -427,16 +422,8 @@ li:focus .sub-menu__extend,
     grid-area: reservation-time-input;
 }
 
-.reservation-name {
-    grid-area: reservation-name;
-}
-
 .reservation-name-input {
     grid-area: reservation-name-input;
-}
-
-.reservation-phone {
-    grid-area: reservation-phone;
 }
 
 .reservation-phone-input {
@@ -446,6 +433,7 @@ li:focus .sub-menu__extend,
 .reservation-text {
     font-size: 0.8rem;
     grid-area: reservation-text;
+    text-align: center;
 }
 
 .reservation-button {
@@ -601,7 +589,7 @@ li:focus .sub-menu__extend,
     background-image: url(img/drive-2.jpg);
     background-size: cover;
     background-position: center;
-    overflow: hidden;
+    overflow: auto;
     padding: 4em 2em;
 }
 
@@ -698,16 +686,17 @@ li:focus .sub-menu__extend,
 6. Utility Classes
 ******************************************************************************/
 
-/* 6.1 Applies to some elements within the reservation-form as a utility class to cover multiple grid tracks */
-.spread-cols {
-    grid-column: 1 / 3;
-    text-align: center;
-}
-
-/* 6.2 Another utility class for reservation-form grid items for readability. The reason for this class is to easily adjust the width for all targeted element simultaneously. */
-.reduce-input-width {
-    justify-self: center;
-    width: 100%;
+/* Utility class consistent from Bootstrap framework that hides content, while keeping it within screen-reader accessability. This is mainly to apply to text labels. */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
 }
 
 /******************************************************************************
@@ -731,6 +720,23 @@ li:focus .sub-menu__extend,
     }
     100% {
         transform: rotateX(0deg);
+    }
+}
+
+.inner-slider-images {
+    background-color: var(--black-0);
+}
+
+.inner-slider-images * {
+    animation: fadeAway 9s ease-in;
+}
+
+@keyframes fadeAway {
+    70% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.1;
     }
 }
 
@@ -787,48 +793,28 @@ li:focus .sub-menu__extend,
 }
 
 .modal-form {
-    align-self: center;
     display: grid;
     gap: 1em;
     grid-template-areas:
-        "private-dining-name private-dining-name-input"
-        "private-dining-phone private-dining-phone-input"
-        "private-dining-email private-dining-email-input"
-        ". private-dining-comments"
-        ". private-dining-comments-input";
+        "private-dining-name-input"
+        "private-dining-phone-input"
+        "private-dining-email-input"
+        "private-dining-message-input";
     padding: 2em;
-}
-
-.private-dining-name {
-    grid-area: private-dining-name;
 }
 
 #private-dining-name {
     grid-area: private-dining-name-input;
 }
 
-.private-dining-phone {
-    grid-area: private-dining-phone;
-}
-
 #private-dining-phone {
     grid-area: private-dining-phone-input;
-}
-
-.private-dining-email {
-    grid-area: private-dining-email;
 }
 
 #private-dining-email {
     grid-area: private-dining-email-input;
 }
 
-.private-dining-comments {
-    grid-area: private-dining-comments;
-    grid-column: 1 / 3;
-}
-
-#private-dining-comments {
-    grid-area: private-dining-comments-input;
-    grid-column: 1 / 3;
+#private-dining-message {
+    grid-area: private-dining-message-input;
 }

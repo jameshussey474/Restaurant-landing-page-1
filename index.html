@@ -112,50 +112,53 @@
                 </section>
                 <section class="main__reservation-section" id="main__reservation-section">
                     <form class="reservation-form">
-                        <h2 class="reservation-title spread-cols">Reservation</h2>
-                        <label class="reservation-guests" for="reservation-guests">
-                            Number of Guests
-                        </label>
-                        <input
-                            type="number"
-                            class="reduce-input-width"
-                            id="reservation-guests"
-                            min="1"
-                            max="12"
-                        />
-                        <label class="reservation-date" for="reservation-date">Date</label>
-                        <input type="date" id="reservation-date" class="reduce-input-width" />
-                        <label class="reservation-time" for="reservation-time">Time *</label>
-                        <select
-                            id="reservation-time"
-                            name="reservation-time"
-                            class="reduce-input-width"
-                        >
-                            <option value="10">10am</option>
-                            <option value="11">11am</option>
-                            <option value="12">12pm</option>
-                            <option value="17">5pm</option>
-                            <option value="18">6pm</option>
-                            <option value="19">7am</option>
-                            <option value="20">8pm</option>
-                            <option value="21">9pm</option>
-                        </select>
-                        <label class="reservation-name" for="reservation-name">Name</label>
-                        <input
-                            id="reservation-name"
-                            class="reservation-name-input reduce-input-width"
-                            type="text"
-                        />
-                        <label class="reservation-phone" for="reservation-phone">Phone No.</label>
-                        <input
-                            id="reservation-phone"
-                            class="reservation-phone-input reduce-input-width"
-                            type="tel"
-                        />
-                        <button type="button" class="reservation-button spread-cols">
-                            Reserve
-                        </button>
-                        <p class="reservation-text spread-cols">
+                        <h2 class="reservation-title">Reservation</h2>
+                        <div class="inner-reservation-form">
+                            <label
+                                class="reservation-guests sr-only"
+                                for="reservation-guests"
+                            ></label>
+                            <input
+                                type="number"
+                                id="reservation-guests"
+                                min="1"
+                                max="12"
+                                placeholder="Number of Guests"
+                            />
+                            <label class="reservation-date sr-only" for="reservation-date"></label>
+                            <input type="date" id="reservation-date" placeholder="Date" />
+                            <label class="reservation-time sr-only" for="reservation-time"></label>
+                            <select id="reservation-time" name="reservation-time">
+                                <option value="" selected disabled hidden>Time *</option>
+                                <option value="10">10am</option>
+                                <option value="11">11am</option>
+                                <option value="12">12pm</option>
+                                <option value="17">5pm</option>
+                                <option value="18">6pm</option>
+                                <option value="19">7am</option>
+                                <option value="20">8pm</option>
+                                <option value="21">9pm</option>
+                            </select>
+                            <label class="reservation-name sr-only" for="reservation-name"></label>
+                            <input
+                                id="reservation-name"
+                                class="reservation-name-input"
+                                type="text"
+                                placeholder="Name"
+                            />
+                            <label
+                                class="reservation-phone sr-only"
+                                for="reservation-phone"
+                            ></label>
+                            <input
+                                id="reservation-phone"
+                                class="reservation-phone-input"
+                                type="tel"
+                                placeholder="Phone No."
+                            />
+                            <button type="button" class="reservation-button">Reserve</button>
+                        </div>
+                        <p class="reservation-text">
                             * Please note that all reservations are allocated a maximum time limit
                             of 2 hrs. If you would like to stay longer, schedule a
                             <a href="#main__private-dining-section">private dining experience</a>
@@ -209,9 +212,12 @@
                     <section class="bottom-section__map" id="bottom-section__map">
                         <h2 class="map-title">Our Location</h2>
                         <iframe
+                            width="100%"
+                            height="100%"
                             title="map-location"
                             class="iframe"
                             alt="google map of location"
+                            loading="lazy"
                             allowfullscreen
                             id="gmap_canvas"
                             src="https://maps.google.com/maps?q=111%20wellington%20ottawa&t=&z=13&ie=UTF8&iwloc=&output=embed"
