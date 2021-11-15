@@ -18,13 +18,14 @@ const body = document.querySelector("body");
 const closePrivateDining = document.querySelector(".close-private-dining");
 const hamburger = document.querySelector(".hamburger");
 const headerMenu = document.querySelector(".header-menu");
+const headerMenuItems = document.querySelector(".header-menu__items");
 const headerReservation = document.querySelector(".header-reservation");
 const innerSliderImages = document.querySelector(".inner-slider-images");
 const mainHeader = document.querySelector(".main__header");
 const mainNav = document.querySelector(".main__nav");
 const privateDining = document.querySelector(".private-dining-button");
-const subMenuContact = document.querySelector(".sub-menu__contact");
-const subMenuMenus = document.querySelector(".sub-menu__menus");
+const subMenuContact = document.querySelector(".sub-menu__contact a"); // latch onto the link element not the ul
+const subMenuMenus = document.querySelector(".sub-menu__menus a"); // latch onto the link element not the ul
 
 // Variables that represent dynamic elements for the private dining modal
 let modalContainer, modalSection, modalArticle, modalTitle, modalText, modalForm, modalButton;
@@ -50,7 +51,7 @@ allTouchCancelEventListeners();
 function allClickEventListeners() {
     body.addEventListener("click", closePrivateDiningModal); //event delegation on closePrivateDining variable needs to be handled by the body element
     body.addEventListener("click", closeOpenMenu); //event delegation to close the main__nav needs to be handled by the body element
-    hamburger.addEventListener("click", toggleMenuOpen);
+    hamburger.addEventListener("click", toggleMenu);
     privateDining.addEventListener("click", openPrivateDiningModal);
     subMenuContact.addEventListener("click", toggleSubMenuContact);
     subMenuMenus.addEventListener("click", toggleSubMenuMenus);
@@ -71,19 +72,38 @@ function loadEventListeners() {
 3. Global Functions
 ******************************************************************************/
 
-// Toggles the "menu-open" class for the navbar
-function toggleMenuOpen() {
-    headerMenu.classList.toggle("menu-open");
+// Toggles the "menu-open" class for the navbar. If the nav bar closes, make sure the sub-menus also close.
+function toggleMenu() {
+    if (!headerMenu.classList.contains("menu-open")) {
+        headerMenu.classList.add("menu-open");
+        // headerMenuItems.classList.remove("add-backup");
+    } else {
+        // headerMenuItems.classList.add("add-backup");
+        subMenuMenus.parentElement.children[1].classList.remove("sub-menu-open");
+        subMenuContact.parentElement.children[1].classList.remove("sub-menu-open");
+        // headerMenu.addEventListener("animationend", () => {
+        //||| needs a closer look with event delegation bubbling. headerMenuItems animation end is interrupting its parent animation
+        headerMenu.classList.remove("menu-open");
+        // });
+    }
+
+    // headerMenu.classList.toggle("menu-open");
+    // if (headerMenu.classList.contains("menu-open")) {
+    // if (!headerMenu.classList.contains("menu-open")) {
+    // headerMenuItems.animationend("c");
+    // console.log("closed");
+    // }
+    // headerMenuItems.classList.remove("add-backup");
 }
 
 // Toggles the "sub-menu-open" for the "sub-menu__menus" element to expose more links below.
-function toggleSubMenuMenus(event) {
-    event.target.parentElement.children[1].classList.toggle("sub-menu-open");
+function toggleSubMenuMenus() {
+    subMenuMenus.parentElement.children[1].classList.toggle("sub-menu-open");
 }
 
 // Toggles the "sub-menu-open" for the "sub-menu__contact" element to expose more links below.
-function toggleSubMenuContact(event) {
-    event.target.parentElement.children[1].classList.toggle("sub-menu-open");
+function toggleSubMenuContact() {
+    subMenuContact.parentElement.children[1].classList.toggle("sub-menu-open");
 }
 
 // Automatically cycles through images within the "inner-slider-images" section
@@ -146,7 +166,7 @@ function setModalContainerHTML() {
             <i class="fas fa-times"></i>
         </button>
         <article class="modal-article">
-            <h2 class="modal-title">Just the Occasion</h2>
+            <h2 class="modal-title">Private Events</h2>
             <p class="modal-text">
                 We at Mehr offer an intimate and vibrant setting for large private gatherings. Our private room offers its own secluded entrance, guest restrooms, and catered ambience for the perfect get together. 
             </p>
@@ -188,6 +208,6 @@ function closeOpenMenu(event) {
         event.target.closest("section") !== mainNav &&
         headerMenu.classList.contains("menu-open")
     ) {
-        toggleMenuOpen();
+        toggleMenu();
     }
 }
