@@ -158,7 +158,7 @@ h2 {
     padding: 1em 2em 0 2em;
     position: relative;
     text-align: center;
-    z-index: 20; /* needs to sit in front of the main__nav to hide the top part of its box-shadow */
+    z-index: 200; /* needs to sit in front of the main__nav to hide the top part of its box-shadow */
 }
 
 /* 2.2 */
@@ -201,7 +201,7 @@ h2 {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    z-index: 10; /*Force this element to always be interactive over any other elements of the page, especially for reservation-form or iframe map*/
+    z-index: 100; /*Force this element to always be interactive over any other elements of the page, especially for reservation-form, iframe map, etc. Javascript will close the back-to-top and man nav menus, so no need to succeed those z-index numbers with this selector.*/
 }
 
 /* 3.1.1 hovering effect for desktop (style for black bar fixme:!!!) */
@@ -737,7 +737,7 @@ li:focus .sub-menu__extend,
     padding: var(--half-em);
     position: fixed;
     right: 1em;
-    z-index: 10;
+    z-index: 1; /*Needs to be in front of all default elements*/
 }
 
 .back-to-top i {
@@ -790,7 +790,7 @@ li:focus .sub-menu__extend,
 
 .welcome-article {
     position: absolute;
-    z-index: 30;
+    z-index: 1; /*This needs to be in front of any img element siblings within its parent container*/
     background-color: var(--black-3-op);
     min-height: 100%;
     width: 100%;
@@ -832,7 +832,7 @@ li:focus .sub-menu__extend,
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 30; /*Must be in front of the main__nav menu when this modal is open*/
+    z-index: 200; /*Must be in front of the main__nav menu when this modal is open*/
 }
 
 .modal-section {

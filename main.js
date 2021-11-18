@@ -60,7 +60,7 @@ let privateDiningInit = false;
 // Call all event listeners
 loadDOMContentLoadedEventListeners();
 loadClickEventListeners();
-loadTouchEndEventListeners();
+loadTouchEventListeners();
 loadResizeEventListeners();
 loadInputEventListeners();
 
@@ -75,9 +75,9 @@ function loadClickEventListeners() {
 }
 
 // Load all touchcancel events
-function loadTouchEndEventListeners() {
-    subMenuContact.addEventListener("touchend", toggleSubMenuContact);
-    subMenuMenus.addEventListener("touchend", toggleSubMenuMenus);
+function loadTouchEventListeners() {
+    subMenuContact.addEventListener("touch", toggleSubMenuContact);
+    subMenuMenus.addEventListener("touch", toggleSubMenuMenus);
 }
 
 // Load all DOMContentLoaded events
