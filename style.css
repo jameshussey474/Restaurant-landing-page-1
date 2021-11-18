@@ -336,16 +336,7 @@ li:focus .sub-menu__extend,
     min-width: 100%;
 }
 
-/* 4.3 */
-.main__welcome-section {
-    background-image: linear-gradient(180deg, var(--white-100-op), var(--white-100-op)),
-        url(img/food4.jpg);
-    background-size: cover;
-    background-position: center;
-}
-
 /* ||| */
-.main__welcome-section,
 .main__reservation-section,
 .main__private-dining-section,
 .main__hours-section,
@@ -355,15 +346,10 @@ li:focus .sub-menu__extend,
     padding: 8em 4em;
 }
 
-/* 4.4 */
-.welcome-article {
-}
-
 /* 4.4.1 */
 .welcome-text {
-    color: var(--black-3);
     margin-top: 1em;
-    text-align: center;
+    padding: 0 2em;
 }
 
 [class*="-text"] {
@@ -371,12 +357,6 @@ li:focus .sub-menu__extend,
     font-size: 1.75rem;
     letter-spacing: 0.02em;
     line-height: 1.25;
-}
-
-/* 4.5 */
-.welcome-title {
-    color: var(--black-3);
-    text-align: center;
 }
 
 /* 4.6 */
@@ -673,7 +653,7 @@ li:focus .sub-menu__extend,
 }
 
 .gift-card-text {
-    padding: 1em 2em;
+    padding: 1em 1em;
     text-align: center;
 }
 
@@ -752,17 +732,20 @@ li:focus .sub-menu__extend,
 
 .back-to-top {
     background-color: var(--black-3);
-    border-radius: 100%;
-    bottom: 2em;
+    bottom: 1em;
     box-shadow: 0px 0px 10px 2px var(--white-100-op);
     padding: var(--half-em);
     position: fixed;
-    right: 2em;
+    right: 1em;
     z-index: 10;
 }
 
 .back-to-top i {
     font-size: 1.5em;
+}
+
+.hide {
+    display: none;
 }
 
 /******************************************************************************
@@ -800,11 +783,26 @@ li:focus .sub-menu__extend,
     }
 }
 
-.inner-slider-images {
+.inner-welcome-section {
+    position: relative;
     background-color: var(--black-0);
 }
 
-.inner-slider-images * {
+.welcome-article {
+    position: absolute;
+    z-index: 30;
+    background-color: var(--black-3-op);
+    min-height: 100%;
+    width: 100%;
+    display: grid;
+    align-items: center;
+}
+
+.inner-welcome-article {
+    text-align: center;
+}
+
+.inner-welcome-section > img {
     animation: fadeAway 9s ease-in;
 }
 
@@ -834,7 +832,7 @@ li:focus .sub-menu__extend,
     position: fixed;
     right: 0;
     top: 0;
-    z-index: 30; /*Must be in front of teh main__nav menu when this modal is open*/
+    z-index: 30; /*Must be in front of the main__nav menu when this modal is open*/
 }
 
 .modal-section {
@@ -842,6 +840,7 @@ li:focus .sub-menu__extend,
     height: 80%;
     overflow: auto; /*need scroll bars for the information at the bottom*/
     width: 80%;
+    position: relative;
 }
 
 .modal-container * {
@@ -849,21 +848,21 @@ li:focus .sub-menu__extend,
 }
 
 .close-private-dining {
-    background-color: var(--white-90);
+    background-color: transparent;
     border: none;
     display: block;
-    padding: 1em 0 0 1em;
-    right: 0;
+    position: fixed;
 }
 
 .close-private-dining i {
-    font-size: 3em;
+    font-size: 2em;
 }
 
 .modal-article {
     display: flex;
     flex-direction: column;
     text-align: center;
+    padding: 2em 1em;
 }
 
 .modal-title {

@@ -14,24 +14,39 @@
 ******************************************************************************/
 
 // Global DOM variables
+const backToTop = document.querySelector(".back-to-top");
 const body = document.querySelector("body");
+const bottomSectionMap = document.querySelector(".bottom-section__map");
 const closePrivateDining = document.querySelector(".close-private-dining");
+const getTime = new Intl.DateTimeFormat().format(new Date());
 const hamburger = document.querySelector(".hamburger");
 const headerMenu = document.querySelector(".header-menu");
 const headerMenuItems = document.querySelector(".header-menu__items");
 const headerReservation = document.querySelector(".header-reservation");
-const innerSliderImages = document.querySelector(".inner-slider-images");
+const iFrame = document.querySelector("iframe");
+const innerWelcomeSection = document.querySelector(".inner-welcome-section");
 const mainHeader = document.querySelector(".main__header");
 const mainNav = document.querySelector(".main__nav");
 const privateDining = document.querySelector(".private-dining-button");
+const reservationDate = document.querySelector("#reservation-date");
 const subMenuContact = document.querySelector(".sub-menu__contact a"); // latch onto the link element not the ul
 const subMenuMenus = document.querySelector(".sub-menu__menus a"); // latch onto the link element not the ul
 
-// Variables that represent dynamic elements for the private dining modal
-let modalContainer, modalSection, modalArticle, modalTitle, modalText, modalForm, modalButton;
+// Variables that represent dynamic elements for the private dining modal, calcMapSize() function
+let modalContainer,
+    modalSection,
+    modalArticle,
+    modalTitle,
+    modalText,
+    modalForm,
+    modalButton,
+    iFrameWidth,
+    mapPadding;
 
 // Variables for the slideshow
-const images = Array.from(innerSliderImages.children); //grab the html collection and put it into an array
+const images = Array.from(innerWelcomeSection.children); //grab the html collection and put it into an array
+images.splice(0, 1); // need to grab only the last three img elements of innerWelcomeSection to cycle throughout
+
 let current = 0; // this must be initialized before autoSlideshow() is called in order to hoist variable in the function
 let time = 9000; // declare how long slides will last in milliseconds for the automatic slideshow
 
@@ -43,12 +58,14 @@ let privateDiningInit = false;
 ******************************************************************************/
 
 // Call all event listeners
-loadEventListeners();
-allClickEventListeners();
-allTouchCancelEventListeners();
+loadDOMContentLoadedEventListeners();
+loadClickEventListeners();
+loadTouchEndEventListeners();
+loadResizeEventListeners();
+loadInputEventListeners();
 
-// Load all click event listeners
-function allClickEventListeners() {
+// Load all click events
+function loadClickEventListeners() {
     body.addEventListener("click", closePrivateDiningModal); //event delegation on closePrivateDining variable needs to be handled by the body element
     body.addEventListener("click", closeOpenMenu); //event delegation to close the main__nav needs to be handled by the body element
     hamburger.addEventListener("click", toggleMenu);
@@ -57,15 +74,27 @@ function allClickEventListeners() {
     subMenuMenus.addEventListener("click", toggleSubMenuMenus);
 }
 
-// Load all touchcancel event listeners
-function allTouchCancelEventListeners() {
-    subMenuContact.addEventListener("touchcancel", toggleSubMenuContact);
-    subMenuMenus.addEventListener("touchcancel", toggleSubMenuMenus);
+// Load all touchcancel events
+function loadTouchEndEventListeners() {
+    subMenuContact.addEventListener("touchend", toggleSubMenuContact);
+    subMenuMenus.addEventListener("touchend", toggleSubMenuMenus);
 }
 
-// Load window event listeners
-function loadEventListeners() {
-    window.addEventListener("DOMContentLoaded", autoSlideshow);
+// Load all DOMContentLoaded events
+function loadDOMContentLoadedEventListeners() {
+    document.addEventListener("DOMContentLoaded", autoSlideshow);
+    document.addEventListener("DOMContentLoaded", calcMapSize);
+    document.addEventListener("DOMContentLoaded", setCurrentTime(getTime));
+}
+
+// Loads all resize events
+function loadResizeEventListeners() {
+    window.addEventListener("resize", calcMapSize);
+}
+
+// Loads all input events
+function loadInputEventListeners() {
+    reservationDate.addEventListener("input", checkClosedDays);
 }
 
 /******************************************************************************
@@ -106,7 +135,7 @@ function toggleSubMenuContact() {
     subMenuContact.parentElement.children[1].classList.toggle("sub-menu-open");
 }
 
-// Automatically cycles through images within the "inner-slider-images" section
+// Automatically cycles through images within the "inner-welcome-section" section
 function autoSlideshow() {
     for (let i = 0; i < images.length; i++) {
         images[i].style.display = "none";
@@ -131,6 +160,12 @@ function openPrivateDiningModal() {
         modalContainer.style.display = "grid";
     }
     privateDiningInit = true; //set the global variable to true to now always skip creating new elements whenever this function is called.
+    toggleBackToTop(); //regardless, hide the back-top-top button
+}
+
+// Opens and closes the back-to-top button
+function toggleBackToTop() {
+    backToTop.classList.toggle("hide");
 }
 
 // This function is called to dynamically create all the necessary elements for the private dining modal
@@ -198,6 +233,7 @@ function setModalContainerHTML() {
 function closePrivateDiningModal(event) {
     if (event.target.parentElement.classList.contains("close-private-dining")) {
         modalContainer.style.display = "none";
+        toggleBackToTop(); //also, display the back-top-top button
     }
 }
 
@@ -209,5 +245,30 @@ function closeOpenMenu(event) {
         headerMenu.classList.contains("menu-open")
     ) {
         toggleMenu();
+    }
+}
+
+// The map needs to have a dynamic sizing depending on the size of screen the user has.
+function calcMapSize() {
+    iFrameWidth = window.innerWidth;
+    mapPadding = window.getComputedStyle(bottomSectionMap).getPropertyValue(`padding-left`); // in order to center the iframe, get the padding from its parent container...
+    iFrameWidth -= parseInt(mapPadding) * 2; //... and subtract both left and right from it
+    iFrame.setAttribute("height", iFrameWidth);
+    iFrame.setAttribute("width", iFrameWidth);
+    console.log(iFrameWidth);
+}
+
+// users cannot reserve a date in the past, so this function sets the min attribute of the html reservation-date element to be today
+function setCurrentTime(date) {
+    reservationDate.setAttribute("min", date);
+}
+
+// send an alert to the user if they pick a Monday or Tuesday for a reservation (as the restaurant is closed on those days).
+function checkClosedDays(event) {
+    let day = new Date(this.value).getUTCDay();
+    if ([1, 2].includes(day)) {
+        event.preventDefault();
+        this.value = "";
+        alert("Sorry, we are closed on Monday and Tuesday. Please, pick another day.");
     }
 }
