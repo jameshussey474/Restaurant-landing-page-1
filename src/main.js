@@ -199,7 +199,7 @@ function setNewsletterModalContainer() {
         <button class="close-newsletter">
             <i class="fas fa-times"></i>
         </button>
-        <h1>Want to hear more about Mehr? Read our <a href="newsletter.html">Newsletter</a>!</h1>
+        <h1>Want to hear more about Mehr? Read our <a href="./src/links/newsletter.html">Newsletter</a>!</h1>
 
     </section>`;
 }
