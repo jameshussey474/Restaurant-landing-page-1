@@ -4,11 +4,11 @@
 	Table of Contents
 	-----------------
 	1. Global Styles
-		1.1 -- :root (pseudo-class)
+	   1.1 -- :root (pseudo-class)
         1.2 -- :is(*, ::before, ::after)
         1.3 -- body
         1.4 -- img
-        1.5 -- input, select
+        1.5 -- input, select, input::placeholder
         1.6 -- button
         1.7 -- main
 
@@ -21,38 +21,40 @@
 
 	3. main__nav
         3.1 -- main__nav
-            3.1.1 -- .main__nav::before
-            3.1.2 -- .main__nav:hover::before
+          3.1.1 -- .main__nav::before
+          3.1.2 -- .main__nav:hover::before
         3.2 -- hamburger
         3.3 -- header-menu
         3.4 -- menu-open
-            3.4.1 -- .menu-open li 
+          3.4.1 -- .menu-open li 
         3.5 -- .header-menu__items
-            3.5.1 -- .header-menu__items a
+          3.5.1 -- .header-menu__items a
+          3.5.2 -- .header-menu__items > li
         3.6.1 -- .sub-menu > a:first-child::after
-            3.6.2 -- .sub-menu:hover > a:first-child::after
-            3.6.3 -- .sub-menu:hover .sub-menu__extend
+          3.6.2 -- .sub-menu:hover > a:first-child::after
+          3.6.3 -- .sub-menu:hover .sub-menu__extend
         3.7.1 -- .sub-menu__extend
-            3.7.2 -- .sub-menu__extend li
-            3.7.3 -- .sub-menu__extend li:nth-child(2)
-            3.7.4 -- .sub-menu__extend li:nth-child(3)
-            3.7.5 -- .sub-menu__extend li:nth-child(4)
+          3.7.2 -- .sub-menu__extend li
+          3.7.3 -- .sub-menu__extend li:nth-child(2)
+          3.7.4 -- .sub-menu__extend li:nth-child(3)
+          3.7.5 -- .sub-menu__extend li:nth-child(4)
+          3.7.6 -- .sub-menu__extend li:nth-child(5)
         3.8 -- li:hover .sub-menu__extend, li:focus .sub-menu__extend, .sub-menu-open 
-        
-	4. main__content
 
-        4.1 -- main__content
+     4. main__content
+        4.1 -- .bottom-section__map, .footer-section, .main__hours-section, 
+               .main__reservation-section, .main__private-dining-section
         4.2 -- .slider-image
-        4.3 -- .main__welcome-section
-            4.3.1 -- .main__welcome-section > *
-        4.4 -- .welcome-article
-            4.4.1 -- .welcome-article *
-        4.5 -- .welcome-title
-            4.5.1 -- .welcome-text
+        4.3 -- .welcome-text
+        4.4 -- [class*="-text"]
         4.6 -- .main__reservation-section
             4.6.1 -- .main__reservation-section *
         4.7 -- .reservation-form
+          4.7.1 -- .inner-reservation-form 
         4.8 -- Classes represent grid-areas within reservation-form
+        4.9 -- .menu-grid
+        4.10 -- .menu-article
+        4.11 -- 
 
     5. main__footer
         5.1 -- 
@@ -140,6 +142,16 @@ h2 {
      font-family: var(--font-2);
      font-size: 2rem;
 }
+@media (min-width: 40em) {
+     h2 {
+          font-size: 2.5rem;
+     }
+}
+@media (min-width: 75em) {
+     h2 {
+          font-size: 4rem;
+     }
+}
 
 /* 1.7 The largest div will need to be sticky positioned in order for the main__nav section to work on mobile viewports, and the back-top-top element needs to be fixed, too. Both must have this selector be relative. */
 .main {
@@ -168,6 +180,11 @@ h2 {
      justify-content: space-around;
      margin-left: 2em;
 }
+@media (min-width: 40em) {
+     .header-side-section * {
+          font-size: 1.25rem;
+     }
+}
 
 /* 2.3 */
 .header-logo {
@@ -184,11 +201,6 @@ h2 {
 .header-reservation {
 }
 
-/* media query for desktop */
-/* .header-reservation:hover {
-    box-shadow: 0em 0em 1em 0.3em var(--grey-43);
-} */
-
 /******************************************************************************
 3. main__nav
 ******************************************************************************/
@@ -203,25 +215,6 @@ h2 {
      top: 0;
      z-index: 100; /*Force this element to always be interactive over any other elements of the page, especially for reservation-form, iframe map, etc. Javascript will close the back-to-top and man nav menus, so no need to succeed those z-index numbers with this selector.*/
 }
-
-/* 3.1.1 hovering effect for desktop (style for black bar fixme:!!!) */
-/* .main__nav::before {
-    background-color: var(--white-100);
-    bottom: 0;
-    box-shadow: 0 0px 10px var(--white-100);
-    content: "";
-    height: 2px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    transform: scaleX(0);
-    transition: transform 300ms ease-in-out;
-} */
-
-/* 3.1.2 */
-/* .main__nav:hover::before {
-    transform: scaleX(1);
-} */
 
 /* 3.2 Needs position relative to be brought up into the header when the page initially loads */
 .hamburger {
@@ -257,20 +250,18 @@ h2 {
      justify-content: space-around;
 }
 
-.swoop-in-animation {
-     animation: swoopIn 1s cubic-bezier(0.68, -0.55, 0, 1.32); /*custom bezier function gives a "bounce" effect at the end of the animation*/
-}
-
-.swoop-out-animation {
-     animation: swoopOut 1s cubic-bezier(0.68, -0.55, 0, 1.32);
-}
-
 /* 3.5.1 */
 .header-menu__items a {
      text-decoration: none;
      font-size: 1.75rem;
 }
+@media (min-width: 40em) {
+     .header-menu__items a {
+          font-size: 2.5rem;
+     }
+}
 
+/* 3.5.2 */
 .header-menu__items > li {
      font-size: 2rem;
      padding: var(--quarter-em) 0;
@@ -286,10 +277,6 @@ h2 {
 /* 3.7.1 Default hidden until the parent li is hovered or clicked */
 .sub-menu__extend {
      display: none;
-}
-
-.sub-menu__contact {
-     /* padding-right: 2em; */
 }
 
 /* 3.7.2 */
@@ -312,6 +299,7 @@ h2 {
      animation-delay: 0.4s;
 }
 
+/* 3.7.6 */
 .sub-menu__extend li:nth-child(5) {
      animation-delay: 0.5s;
 }
@@ -329,8 +317,22 @@ li:focus .sub-menu__extend,
 ******************************************************************************/
 
 /* 4.1 */
-.main__content {
-     /* padding: 0 2em; */
+.bottom-section__map,
+.footer-section,
+.main__hours-section,
+.main__reservation-section,
+.main__private-dining-section {
+     padding: 8em 2em;
+}
+@media (min-width: 40em) {
+     .main__menu-section {
+          padding: 4em 0;
+     }
+}
+@media (min-width: 75em) {
+     .main__menu-section {
+          padding: 4em 18em;
+     }
 }
 
 /* 4.2 Hide all slideshow images by default */
@@ -342,28 +344,29 @@ li:focus .sub-menu__extend,
      min-width: 100%;
 }
 
-/* ||| */
-
-.bottom-section__map,
-.footer-section,
-.main__hours-section,
-.main__reservation-section,
-.main__private-dining-section {
-     padding: 8em 2em;
-}
-
-/* 4.4.1 */
+/* 4.3 */
 .welcome-text {
      text-shadow: 1px 1px 1px var(--black-3);
      margin-top: var(--half-em);
      padding: 0 2em;
 }
 
+/* 4.4 */
 [class*="-text"] {
      font-weight: 700;
      font-size: 1.75rem;
      letter-spacing: 0.02em;
      line-height: 1.25;
+}
+@media (min-width: 40em) {
+     [class*="-text"] {
+          font-size: 2.5rem;
+     }
+}
+@media (min-width: 75em) {
+     [class*="-text"] {
+          font-size: 3rem;
+     }
 }
 
 /* 4.6 */
@@ -371,6 +374,17 @@ li:focus .sub-menu__extend,
      background-image: url(../img/mobile/banquet-mobile.jpg);
      background-size: cover;
      background-position: center;
+}
+@media (min-width: 40em) {
+     .main__reservation-section {
+          background-image: url(../img/tablet/banquet-tablet.jpg);
+     }
+}
+@media (min-width: 75em) {
+     .main__reservation-section {
+          background-image: url(../img/desktop/banquet.jpg);
+          padding: 18em;
+     }
 }
 
 /* 4.6.1 */
@@ -387,6 +401,7 @@ li:focus .sub-menu__extend,
      padding: 1em;
 }
 
+/* 4.7.1 */
 .inner-reservation-form {
      display: grid;
      gap: 1em;
@@ -399,7 +414,23 @@ li:focus .sub-menu__extend,
           "reservation-phone-input"
           "reservation-button"
           "reservation-text";
-     padding: 1em 2em;
+     padding: 1em 2em 0 2em;
+}
+@media (min-width: 40em) {
+     .inner-reservation-form {
+          gap: 1.5em;
+     }
+     .inner-reservation-form input,
+     .inner-reservation-form select {
+          padding: 1em 0;
+     }
+}
+@media (min-width: 75em) {
+     .inner-reservation-form input,
+     .inner-reservation-form select {
+          padding: 1em 0;
+          font-size: 1.25rem;
+     }
 }
 
 /* Start 4.8 -- All the below selectors represent a specific grid item of the reservation-form element*/
@@ -435,13 +466,30 @@ li:focus .sub-menu__extend,
      grid-area: reservation-text;
      text-align: center;
 }
+@media (min-width: 40em) {
+     .reservation-text {
+          font-size: 1.1rem;
+     }
+}
+@media (min-width: 75em) {
+     .reservation-text {
+          font-size: 1.3rem;
+     }
+}
 
 .reservation-button {
      background-color: var(--white-100);
      color: var(--black-3);
      font-size: 1rem;
      grid-area: reservation-button;
-     margin: 1em 1em;
+     margin: 0 1em;
+     width: 50%;
+     justify-self: center;
+}
+@media (min-width: 40em) {
+     .reservation-button {
+          font-size: 1.25rem;
+     }
 }
 /* End 4.8 */
 
@@ -459,26 +507,39 @@ li:focus .sub-menu__extend,
      padding: 2em 1em;
 }
 
+/* 4.10 */
 .menu-article {
      font-size: 1.5rem;
      padding: 1em 1em 0 1em;
 }
 
+/* 4.11 */
 .menu-title {
      padding-bottom: 1em;
 }
 
+/* 4.12 */
 .menu-title,
 .menu-text {
      text-shadow: 1px 1px 1px var(--black-3);
 }
 
-/* todo: for mobile, these images should be an obvious link to the corresponding menu! */
-
+/* 4,13 */
 .menu-grid > a {
      position: relative;
 }
+@media (min-width: 40em) {
+     .menu-grid:nth-child(1) {
+          background-image: url(../img/tablet/brunch-tablet.jpg);
+     }
+}
+@media (min-width: 75em) {
+     .menu-grid:nth-child(1) {
+          background-image: url(../img/desktop/brunch.jpg);
+     }
+}
 
+/* 4.14 */
 .menu-grid > a::after {
      bottom: 0;
      color: var(--black-3);
@@ -487,6 +548,11 @@ li:focus .sub-menu__extend,
      left: 0;
      padding: var(--half-em) 1em;
      position: absolute;
+}
+@media (min-width: 40em) {
+     .menu-grid > a::after {
+          font-size: 3rem;
+     }
 }
 
 .menu-grid a:nth-child(2n)::after {
@@ -539,29 +605,22 @@ li:focus .sub-menu__extend,
      min-height: 100%;
 }
 
-/* easily select multiple grid items for media query */
-/* [class*="image-"] {
-    opacity: 0.5;
-}
-
-[class*="image-"]:hover {
-    opacity: 1;
-} */
-
-/* 
-[class*="image-"]::after {
-    content: "";
-    height: 8px;
-    width: 8px;
-    display: block;
-    background-color: red;
-} */
-
 /* ||| */
 .main__private-dining-section {
      background-image: url(../img/mobile/dining-mobile.jpg);
      background-size: cover;
      background-position: center;
+}
+@media (min-width: 40em) {
+     .main__private-dining-section {
+          background-image: url(../img/tablet/dining-tablet.jpg);
+     }
+}
+@media (min-width: 75em) {
+     .main__private-dining-section {
+          background-image: url(../img/desktop/dining.jpg);
+          padding: 18em;
+     }
 }
 
 .private-dining-article {
@@ -577,8 +636,10 @@ li:focus .sub-menu__extend,
      text-shadow: 1px 1px 1px var(--black-3);
 }
 
-.private-dining-text {
-     font-size: 1.5rem;
+@media (min-width: 40em) {
+     .private-dining-button {
+          font-size: 1.25rem;
+     }
 }
 
 /* ||| */
@@ -586,6 +647,17 @@ li:focus .sub-menu__extend,
      background-image: url(../img/mobile/clock-mobile.jpg);
      background-size: cover;
      background-position: center;
+}
+@media (min-width: 40em) {
+     .main__hours-section {
+          background-image: url(../img/tablet/clock-tablet.jpg);
+     }
+}
+@media (min-width: 75em) {
+     .main__hours-section {
+          background-image: url(../img/desktop/clock.jpg);
+          padding: 8em 4em;
+     }
 }
 
 .main__hours-section * {
@@ -611,18 +683,6 @@ li:focus .sub-menu__extend,
      flex-direction: column;
 }
 
-/* todo: this breakpoint needs to be used in JS to stop growing the iframe .40em is the mobile break */
-/* todo: breakpoint at 75em for desktop */
-@media (min-width: 40em) {
-     .main__bottom-section {
-          flex-direction: row;
-     }
-}
-
-.main__bottom-section > section {
-     flex: 1;
-}
-
 .bottom-section__map {
      background-image: url(../img/mobile/open-mobile.jpg);
      background-size: cover;
@@ -630,11 +690,27 @@ li:focus .sub-menu__extend,
      overflow: hidden;
      padding: 4em 2em;
 }
+@media (min-width: 40em) {
+     .bottom-section__map {
+          background-image: url(../img/tablet/open-tablet.jpg);
+     }
+}
+@media (min-width: 75em) {
+     .bottom-section__map {
+          background-image: url(../img/desktop/open.jpg);
+     }
+}
 
 .iframe {
      border: none;
      overflow: auto;
      padding: 1em 0 0 0;
+}
+@media (min-width: 75em) {
+     .iframe {
+          padding: 18em 18em 18em 18em;
+          margin-top: -12em;
+     }
 }
 
 .map-title {
@@ -717,11 +793,16 @@ li:focus .sub-menu__extend,
 .back-to-top {
      background-color: var(--black-3);
      bottom: 1em;
-     box-shadow: 0px 0px 10px 2px var(--white-100-op);
+     box-shadow: 0px 0px 1px 2px var(--white-100-op);
      padding: var(--half-em);
      position: fixed;
      right: 1em;
      z-index: 1; /*Needs to be in front of all default elements*/
+}
+@media (min-width: 40em) {
+     .back-to-top {
+          padding: 1em;
+     }
 }
 
 .back-to-top i {
@@ -744,6 +825,28 @@ li:focus .sub-menu__extend,
 
      100% {
           transform: translateX(0);
+     }
+}
+@media (min-width: 40em) {
+     @keyframes swoopIn {
+          0% {
+               transform: translateX(-55em);
+          }
+
+          100% {
+               transform: translateX(0);
+          }
+     }
+}
+@media (min-width: 75em) {
+     @keyframes swoopIn {
+          0% {
+               transform: translateX(-80em);
+          }
+
+          100% {
+               transform: translateX(0);
+          }
      }
 }
 
@@ -784,6 +887,11 @@ li:focus .sub-menu__extend,
 
 .inner-welcome-article {
      text-align: center;
+}
+@media (min-width: 75em) {
+     .inner-welcome-article {
+          padding: 0 18em;
+     }
 }
 
 .inner-welcome-section > img {
@@ -871,6 +979,11 @@ li:focus .sub-menu__extend,
      padding: 2em;
 }
 
+.private-dining-modal-button {
+     color: var(--white-100);
+     padding: 1em 0;
+}
+
 #private-dining-name {
      grid-area: private-dining-name-input;
 }
@@ -935,4 +1048,12 @@ li:focus .sub-menu__extend,
 .res-success div {
      padding: var(--half-em);
      background-color: black;
+}
+
+.swoop-in-animation {
+     animation: swoopIn 1s cubic-bezier(0.68, -0.55, 0, 1.32); /*custom bezier function gives a "bounce" effect at the end of the animation*/
+}
+
+.swoop-out-animation {
+     animation: swoopOut 1s cubic-bezier(0.68, -0.55, 0, 1.32);
 }
