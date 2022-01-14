@@ -368,7 +368,7 @@ li:focus .sub-menu__extend,
 
 /* 4.6 */
 .main__reservation-section {
-     background-image: url(./img/mobile/banquet-mobile.jpg);
+     background-image: url(../img/mobile/banquet-mobile.jpg);
      background-size: cover;
      background-position: center;
 }
@@ -559,7 +559,7 @@ li:focus .sub-menu__extend,
 
 /* ||| */
 .main__private-dining-section {
-     background-image: url(./img/mobile/dining-mobile.jpg);
+     background-image: url(../img/mobile/dining-mobile.jpg);
      background-size: cover;
      background-position: center;
 }
@@ -583,7 +583,7 @@ li:focus .sub-menu__extend,
 
 /* ||| */
 .main__hours-section {
-     background-image: url(./img/mobile/clock-mobile.jpg);
+     background-image: url(../img/mobile/clock-mobile.jpg);
      background-size: cover;
      background-position: center;
 }
@@ -624,7 +624,7 @@ li:focus .sub-menu__extend,
 }
 
 .bottom-section__map {
-     background-image: url(./img/mobile/open-mobile.jpg);
+     background-image: url(../img/mobile/open-mobile.jpg);
      background-size: cover;
      background-position: 40%;
      overflow: hidden;
