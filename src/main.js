@@ -39,6 +39,7 @@ const resTime = document.querySelector("#reservation-time");
 const resName = document.querySelector("#reservation-name");
 const resPhone = document.querySelector("#reservation-phone");
 const resSubmit = document.querySelector(".reservation-button");
+const menuGrid = document.querySelector(".menu-grid");
 
 // Variables that represent dynamic elements for the private dining modal, calcMapSize() function
 let privateDiningModalContainer,
@@ -70,7 +71,7 @@ let newsletterInit = false;
 // Call all event listeners
 loadDOMContentLoadedEventListeners();
 loadClickEventListeners();
-loadTouchEventListeners();
+// loadTouchEventListeners();
 loadResizeEventListeners();
 loadInputEventListeners();
 
@@ -78,6 +79,7 @@ loadInputEventListeners();
 function loadClickEventListeners() {
      body.addEventListener("click", closePrivateDiningModal); //event delegation on closePrivateDining variable needs to be handled by the body element
      body.addEventListener("click", closeOpenMenu); //event delegation to close the main__nav needs to be handled by the body element
+     body.addEventListener("click", submitPrivateDining); // needs event delegation
      body.addEventListener("click", closeNewsletterModal);
      hamburger.addEventListener("click", toggleMenu);
      newsletter.addEventListener("click", openNewsletterModal);
@@ -87,22 +89,18 @@ function loadClickEventListeners() {
      subMenuMenus.addEventListener("click", toggleSubMenu);
 }
 
-// Load all touchcancel events
-function loadTouchEventListeners() {
-     subMenuContact.addEventListener("touch", toggleSubMenu);
-     subMenuMenus.addEventListener("touch", toggleSubMenu);
-}
-
 // Load all DOMContentLoaded events
 function loadDOMContentLoadedEventListeners() {
      document.addEventListener("DOMContentLoaded", autoSlideshow);
      document.addEventListener("DOMContentLoaded", calcMapSize);
+     document.addEventListener("DOMContentLoaded", imageSourceChange);
      document.addEventListener("DOMContentLoaded", setCurrentTime(getTime));
 }
 
 // Loads all resize events
 function loadResizeEventListeners() {
      window.addEventListener("resize", calcMapSize);
+     window.addEventListener("resize", imageSourceChange);
 }
 
 // Loads all input events
@@ -346,6 +344,50 @@ function calcMapSize() {
      iFrame.setAttribute("width", iFrameWidth);
 }
 
+// this function runs when the screen width changes, and will make sure that images are sourcing depending on the media query (ie. between mobile, tablet, and desktop).
+function imageSourceChange() {
+     let width = window.innerWidth;
+     let wine = document.querySelector(".wine");
+     let staff = document.querySelector(".staff");
+     let chefs = document.querySelector(".chefs");
+     let brunch = document.querySelector(".brunch");
+     let drinks = document.querySelector(".drinks");
+     let beef = document.querySelector(".beef");
+     let takeout = document.querySelector(".takeout");
+     let dessert = document.querySelector(".dessert");
+     let imageArray = [
+          wine,
+          staff,
+          chefs,
+          brunch,
+          drinks,
+          beef,
+          takeout,
+          dessert,
+     ];
+     if (width > 640 && width < 1200) {
+          imageArray.forEach((img) => {
+               let className;
+               if (img.classList.length === 1) {
+                    className = img.classList[0];
+               } else {
+                    className = img.classList[1];
+               }
+               img.src = `./img/tablet/${className}-tablet.jpg`;
+          });
+     } else if (width >= 1200) {
+          imageArray.forEach((img) => {
+               let className;
+               if (img.classList.length === 1) {
+                    className = img.classList[0];
+               } else {
+                    className = img.classList[1];
+               }
+               img.src = `./img/desktop/${className}.jpg`;
+          });
+     }
+}
+
 // users cannot reserve a date in the past, so this function sets the min attribute of the html reservation-date element to be today
 function setCurrentTime(date) {
      reservationDate.setAttribute("min", date);
@@ -363,9 +405,67 @@ function checkClosedDays(event) {
      }
 }
 
+function submitPrivateDining(event) {
+     if (event.target.classList.contains("private-dining-modal-button")) {
+          // convert the HTML collection into an array and filter for the proper input fields
+          const formElements = Array.from(
+               event.target.parentElement.children[3]
+          ).filter((element) => {
+               return (
+                    element.localName === "input" ||
+                    element.localName === "textarea"
+               );
+          });
+          // destructure filtered array
+          [nameField, phone, email, message] = formElements;
+          // check if each filed is valid
+          if (nameField.value === "" || nameField.value.length < 1) {
+               alert("Please fill out your name");
+               nameField.classList.remove("valid");
+          } else {
+               nameField.classList.add("valid");
+          }
+          let phoneRegex =
+               /^(\()?(\d{3})(\)|\-|\.|\s)?(\d{3})(\-|\.|\s)?(\d{4})?$/;
+          if (phoneRegex.test(phone.value) === false || phone.value === "") {
+               phone.classList.remove("valid");
+               alert("Please enter a valid phone number");
+          } else {
+               phone.classList.add("valid");
+          }
+          let emailRegex = /^\w+\@\w+\.([A-Za-z]{2,5})$/i;
+          if (emailRegex.test(email.value) === false || email.value === "") {
+               email.classList.remove("valid");
+               alert("Please enter a valid email address");
+          } else {
+               email.classList.add("valid");
+          }
+
+          if (message.value === "" || message.value.length < 1) {
+               alert("Please tell us about you special event!");
+               message.classList.remove("valid");
+          } else {
+               message.classList.add("valid");
+          }
+
+          //check all are valid before submission
+          if (
+               formElements.every((element) => {
+                    return element.classList.contains("valid");
+               }) === true
+          ) {
+               let data = { name: nameField.value, src: "private-dining" };
+               reservationSuccess(data);
+               // set this popup to last for
+               setTimeout(removeReservationSuccess, 7000);
+          }
+     }
+     event.preventDefault();
+}
+
 // Checks that the form fields are valid before "submitting" to a fake server. Also checks for validation and uses reg exp.
 function submitForm(event) {
-     // convert the HTML collection into an array and filter for the proper input fileds
+     // convert the HTML collection into an array and filter for the proper input fields
      const formElements = Array.from(
           event.target.parentElement.children
      ).filter((element) => {
@@ -413,9 +513,10 @@ function submitForm(event) {
                return element.classList.contains("valid");
           }) === true
      ) {
-          reservationSuccess(nameField.value);
+          let data = { name: nameField.value, src: "reservation" };
+          reservationSuccess(data);
           // set this popup to last for
-          setTimeout(removeReservationSuccess, 7000);
+          setTimeout(removeReservationSuccess, 17000);
      }
      event.preventDefault();
 }
@@ -436,10 +537,23 @@ function removeReservationSuccess() {
      resPhone.value = "";
 }
 
-function reservationSuccess(name) {
+function reservationSuccess(data) {
+     let name = data.name;
+     let src = data.src;
      reservationSuccessOutput = document.createElement("div");
-     reservationSuccessOutput.innerHTML = `<div><p>Thank-you ${name}!</p>
-     <p>Your Reservation has been booked!</p></div>`;
+     if (src === "reservation") {
+          reservationSuccessOutput.innerHTML = `
+          <div>
+               <p>Thank-you ${name}!</p>
+               <p>Your Reservation has been booked!</p>
+          </div>`;
+     } else {
+          reservationSuccessOutput.innerHTML = `
+          <div>
+               <p>Thank-you ${name}!</p>
+               <p>We will get back to you regarding your special event!</p>
+          </div>`;
+     }
      body.append(reservationSuccessOutput);
      reservationSuccessOutput.classList.add("res-success");
      background.forEach((element) => {
