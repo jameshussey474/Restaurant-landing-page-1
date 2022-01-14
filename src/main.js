@@ -70,16 +70,11 @@ let newsletterInit = false;
 
 // Call all event listeners
 loadDOMContentLoadedEventListeners();
-loadClickEventListeners();
-// loadTouchEventListeners();
-loadResizeEventListeners();
-loadInputEventListeners();
 
 // Load all click events
-function loadClickEventListeners() {
+window.addEventListener("load", () => {
      body.addEventListener("click", closePrivateDiningModal); //event delegation on closePrivateDining variable needs to be handled by the body element
      body.addEventListener("click", closeOpenMenu); //event delegation to close the main__nav needs to be handled by the body element
-     body.addEventListener("click", submitPrivateDining); // needs event delegation
      body.addEventListener("click", closeNewsletterModal);
      hamburger.addEventListener("click", toggleMenu);
      newsletter.addEventListener("click", openNewsletterModal);
@@ -87,7 +82,7 @@ function loadClickEventListeners() {
      resSubmit.addEventListener("click", submitForm);
      subMenuContact.addEventListener("click", toggleSubMenu);
      subMenuMenus.addEventListener("click", toggleSubMenu);
-}
+});
 
 // Load all DOMContentLoaded events
 function loadDOMContentLoadedEventListeners() {
@@ -95,6 +90,11 @@ function loadDOMContentLoadedEventListeners() {
      document.addEventListener("DOMContentLoaded", calcMapSize);
      document.addEventListener("DOMContentLoaded", imageSourceChange);
      document.addEventListener("DOMContentLoaded", setCurrentTime(getTime));
+     document.addEventListener("load", () => {
+          body.addEventListener("click", submitPrivateDining); // needs event delegation
+          loadResizeEventListeners();
+          loadInputEventListeners();
+     });
 }
 
 // Loads all resize events
@@ -515,8 +515,8 @@ function submitForm(event) {
      ) {
           let data = { name: nameField.value, src: "reservation" };
           reservationSuccess(data);
-          // set this popup to last for
-          setTimeout(removeReservationSuccess, 17000);
+          // set this popup to last for 7 seconds
+          setTimeout(removeReservationSuccess, 7000);
      }
      event.preventDefault();
 }
