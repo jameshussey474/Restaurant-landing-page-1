@@ -61,7 +61,7 @@ function calcMapSize() {
 ```
 
 -    One very interesting thing I did was create multiple copies of each image, so that when the screen size changed with media queries, the image source would change, too. This meant that each image has a mobile version, tablet version, and desktop version, with the smaller viewports taking low resolution pictures over larger ones that could source better quality images. I did this because when I tested the project on mobile, I found the loading times way to slow and it was mainly due to not minimizing resolution for images when high-definition isn't necessary.
-     --By doing this, my loading times increased drastically--most of my image transfer sizes upon page initialization went down over 95%! For example, the desktop size of the _wine.jpg_ image is 3.94MB, yet the mobile source _wine-mobile.jpg_ is only 60.5KB!
+-    By doing this, my loading times increased drastically--most of my image transfer sizes upon page initialization went down over 95%! For example, the desktop size of the _wine.jpg_ image is 3.94MB, yet the mobile source _wine-mobile.jpg_ is only 60.5KB!
 
 -    I also had a **major** issue towards the end of the project, where I was trying to figure out why all-of-a-sudden all the interactive elements of the my page stopped working. It took me a few days to realize it was such a small mistake: I had placed an `event.preventDefault()` statement in the wrong place inside of my function that submitted the data from my private dining modal! Needless to say, I _hopefully_ won't make this mistake again!
 
