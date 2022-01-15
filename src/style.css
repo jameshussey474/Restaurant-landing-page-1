@@ -4,67 +4,12 @@
 	Table of Contents
 	-----------------
 	1. Global Styles
-	   1.1 -- :root (pseudo-class)
-        1.2 -- :is(*, ::before, ::after)
-        1.3 -- body
-        1.4 -- img
-        1.5 -- input, select, input::placeholder
-        1.6 -- button
-        1.7 -- main
-
 	2. main__header
-        2.1 -- header-section
-        2.2 -- header-side-section
-        2.3 -- header-logo
-        2.4 -- header-phone
-        2.5 -- header-reservation
-
 	3. main__nav
-        3.1 -- main__nav
-          3.1.1 -- .main__nav::before
-          3.1.2 -- .main__nav:hover::before
-        3.2 -- hamburger
-        3.3 -- header-menu
-        3.4 -- menu-open
-          3.4.1 -- .menu-open li 
-        3.5 -- .header-menu__items
-          3.5.1 -- .header-menu__items a
-          3.5.2 -- .header-menu__items > li
-        3.6.1 -- .sub-menu > a:first-child::after
-          3.6.2 -- .sub-menu:hover > a:first-child::after
-          3.6.3 -- .sub-menu:hover .sub-menu__extend
-        3.7.1 -- .sub-menu__extend
-          3.7.2 -- .sub-menu__extend li
-          3.7.3 -- .sub-menu__extend li:nth-child(2)
-          3.7.4 -- .sub-menu__extend li:nth-child(3)
-          3.7.5 -- .sub-menu__extend li:nth-child(4)
-          3.7.6 -- .sub-menu__extend li:nth-child(5)
-        3.8 -- li:hover .sub-menu__extend, li:focus .sub-menu__extend, .sub-menu-open 
-
      4. main__content
-        4.1 -- .bottom-section__map, .footer-section, .main__hours-section, 
-               .main__reservation-section, .main__private-dining-section
-        4.2 -- .slider-image
-        4.3 -- .welcome-text
-        4.4 -- [class*="-text"]
-        4.6 -- .main__reservation-section
-            4.6.1 -- .main__reservation-section *
-        4.7 -- .reservation-form
-          4.7.1 -- .inner-reservation-form 
-        4.8 -- Classes represent grid-areas within reservation-form
-        4.9 -- .menu-grid
-        4.10 -- .menu-article
-        4.11 -- 
-
-    5. main__footer
-        5.1 -- 
-
-    6. Utility Classes
-        6.1 -- .spread-cols
-        6.2 -- .reduce-input-width
-
-    7. Animation
-        7.1 -- @keyframes rollDown 
+     5. main__footer
+     6. Animation
+     7. Modals
 
 *******************************************************************************/
 
@@ -72,12 +17,11 @@
 1. Global Styles
 ******************************************************************************/
 
-/* 1.1  Declares custom variables for the html document*/
 :root {
      /* General property declarations */
      box-sizing: border-box;
      scroll-behavior: smooth;
-     /* note: both Google only fonts have 400 and 700 options */
+     /* both Google fonts have 400 and 700 options */
      --font-1: "Tangerine", cursive;
      --font-2: "Philosopher", sans-serif;
      /* Custom colours */
@@ -96,7 +40,6 @@
      --quarter-em: 0.25em;
 }
 
-/* 1.2 Rules the universal selector and basic pseudo classes to defined global styles*/
 :is(*, ::before, ::after) {
      box-sizing: inherit;
      color: var(--white-100);
@@ -105,19 +48,16 @@
      padding: 0;
 }
 
-/* 1.3 Sets some default values for the body tag */
 body {
      background-color: var(--grey-43);
      margin-top: 0;
      letter-spacing: 0.02em;
 }
 
-/* 1.4 Sets a max width for all images */
 img {
      max-width: 100%;
 }
 
-/* 1.5 sets some default colors for text with user input */
 input,
 select,
 input::placeholder {
@@ -126,7 +66,6 @@ input::placeholder {
      opacity: 1;
 }
 
-/* 1.6 defaults for buttons on the page */
 button {
      background-color: var(--grey-19);
      border: solid 2px var(--white-100);
@@ -137,7 +76,6 @@ button {
      padding: 0.75em 1em;
 }
 
-/* 1.7 Apply a default global style to all html <h2> tags to use this font*/
 h2 {
      font-family: var(--font-2);
      font-size: 2rem;
@@ -153,16 +91,56 @@ h2 {
      }
 }
 
-/* 1.7 The largest div will need to be sticky positioned in order for the main__nav section to work on mobile viewports, and the back-top-top element needs to be fixed, too. Both must have this selector be relative. */
+/* The largest div will need to be sticky positioned in order for the main__nav section to work on mobile viewports, and the back-top-top element needs to be fixed, too. Both must have this selector be relative. */
 .main {
      position: relative;
+}
+
+/* Utility class for several pseudo elements to hide them on the page but make sure content is there for accessability reasons. */
+.sr-only {
+     position: absolute;
+     width: 1px;
+     height: 1px;
+     padding: 0;
+     margin: -1px;
+     overflow: hidden;
+     clip: rect(0, 0, 0, 0);
+     white-space: nowrap;
+     border: 0;
+}
+
+/* Button is always visible to help users navigate easily to the top of the page */
+.back-to-top {
+     background-color: var(--black-3);
+     bottom: 1em;
+     box-shadow: 0px 0px 1px 2px var(--white-100-op);
+     padding: var(--half-em);
+     position: fixed;
+     right: 1em;
+     z-index: 1; /*Needs to be in front of all default elements*/
+}
+.back-to-top:hover {
+     box-shadow: 0px 0px 10px 5px var(--white-100-op);
+}
+@media (min-width: 40em) {
+     .back-to-top {
+          padding: 1em;
+     }
+}
+
+.back-to-top i {
+     font-size: 1.5em;
+}
+
+/* Utility class for easily hiding elements */
+.hide {
+     display: none;
 }
 
 /******************************************************************************
 2. main__header
 ******************************************************************************/
 
-/* 2.1 */
 .header-section {
      background-color: var(--grey-19);
      display: flex;
@@ -173,7 +151,6 @@ h2 {
      z-index: 200; /* needs to sit in front of the main__nav to hide the top part of its box-shadow */
 }
 
-/* 2.2 */
 .header-side-section {
      display: flex;
      flex-direction: column;
@@ -186,37 +163,37 @@ h2 {
      }
 }
 
-/* 2.3 */
-.header-logo {
-     /* https://looka.com/editor/75934574 for more colours of grey need be*/
-}
-
-/* 2.4 add some minor letter spacing for readability */
+/* Add some minor letter spacing for readability */
 .header-phone {
      font-family: var(--font-2);
      letter-spacing: 0.1em;
 }
 
-/* 2.5 */
-.header-reservation {
+.header-reservation:hover {
+     color: var(--grey-19);
+     background-color: var(--white-100);
+}
+
+.header-reservation:active {
+     color: var(--black-3);
+     background-color: var(--white-90);
 }
 
 /******************************************************************************
 3. main__nav
 ******************************************************************************/
 
-/* 3.1 This section stays sticky for mobile viewports for easier UI */
+/* This section stays sticky for easier UI */
 .main__nav {
      background-color: var(--grey-19);
      box-shadow: 0em var(--quarter-em) 0.5em black;
-     /* margin-top: -1em; */
      position: sticky;
      position: -webkit-sticky;
      top: 0;
      z-index: 100; /*Force this element to always be interactive over any other elements of the page, especially for reservation-form, iframe map, etc. Javascript will close the back-to-top and man nav menus, so no need to succeed those z-index numbers with this selector.*/
 }
 
-/* 3.2 Needs position relative to be brought up into the header when the page initially loads */
+/* Needs position relative to be brought up into the header when the page initially loads */
 .hamburger {
      background-color: transparent;
      border: none;
@@ -228,29 +205,26 @@ h2 {
      position: relative;
 }
 
-/* 3.3 Hides the main nav items by default */
+/* Hides the main nav items by default */
 .header-menu {
      display: none;
 }
 
-/* 3.4 JavaScript toggles this class to display the main__nav section */
+/* JavaScript toggles this class to display the main__nav section */
 .menu-open {
      display: block;
 }
 
-/* 3.4.1  */
 .menu-open li {
      list-style: none;
      padding-top: var(--half-em);
 }
 
-/* 3.5 */
 .header-menu__items {
      display: flex;
      justify-content: space-around;
 }
 
-/* 3.5.1 */
 .header-menu__items a {
      text-decoration: none;
      font-size: 1.75rem;
@@ -261,50 +235,47 @@ h2 {
      }
 }
 
-/* 3.5.2 */
+.header-menu__items a:hover {
+     text-shadow: 1px 1px 3px white;
+}
+
 .header-menu__items > li {
      font-size: 2rem;
      padding: var(--quarter-em) 0;
      text-shadow: 1px 1px 1px var(--black-3);
 }
 
-/* 3.6.3 Desktop hover on certain nav elements displays their sub-menu items*/
+/* Desktop hover on certain nav elements displays their sub-menu items*/
 .sub-menu:hover .sub-menu__extend {
      display: flex;
      flex-direction: column;
 }
 
-/* 3.7.1 Default hidden until the parent li is hovered or clicked */
+/* Default hidden until the parent li is hovered or clicked */
 .sub-menu__extend {
      display: none;
 }
 
-/* 3.7.2 */
 .sub-menu__extend li {
      animation: rollDown 0.1s linear backwards;
 }
 
-/* 3.7.3 */
 .sub-menu__extend li:nth-child(2) {
      animation-delay: 0.2s;
 }
 
-/* 3.7.4 */
 .sub-menu__extend li:nth-child(3) {
      animation-delay: 0.3s;
 }
 
-/* 3.7.5 */
 .sub-menu__extend li:nth-child(4) {
      animation-delay: 0.4s;
 }
 
-/* 3.7.6 */
 .sub-menu__extend li:nth-child(5) {
      animation-delay: 0.5s;
 }
 
-/* 3.8 Desktop media query as well as toggling class in JavaScript*/
 li:hover .sub-menu__extend,
 li:focus .sub-menu__extend,
 .sub-menu-open {
@@ -312,11 +283,14 @@ li:focus .sub-menu__extend,
      flex-direction: column;
 }
 
+.newsletter {
+     cursor: pointer;
+}
+
 /******************************************************************************
 4. main__content
 ******************************************************************************/
 
-/* 4.1 */
 .bottom-section__map,
 .footer-section,
 .main__hours-section,
@@ -326,7 +300,7 @@ li:focus .sub-menu__extend,
 }
 @media (min-width: 40em) {
      .main__menu-section {
-          padding: 4em 0;
+          padding: 4em 8em;
      }
 }
 @media (min-width: 75em) {
@@ -335,7 +309,35 @@ li:focus .sub-menu__extend,
      }
 }
 
-/* 4.2 Hide all slideshow images by default */
+.inner-welcome-section {
+     position: relative;
+     background-color: var(--black-0);
+}
+
+.welcome-article {
+     position: absolute;
+     z-index: 1; /*This needs to be in front of any img element siblings within its parent container*/
+     background-color: var(--black-3-op);
+     min-height: 100%;
+     width: 100%;
+     display: grid;
+     align-items: center;
+}
+
+.inner-welcome-article {
+     text-align: center;
+}
+@media (min-width: 75em) {
+     .inner-welcome-article {
+          padding: 0 18em;
+     }
+}
+
+.inner-welcome-section > img {
+     animation: fadeAway 9s ease-in;
+}
+
+/* Hide all slideshow images by default */
 .slider-image {
      background-size: contain;
      display: none;
@@ -344,14 +346,13 @@ li:focus .sub-menu__extend,
      min-width: 100%;
 }
 
-/* 4.3 */
 .welcome-text {
      text-shadow: 1px 1px 1px var(--black-3);
      margin-top: var(--half-em);
      padding: 0 2em;
 }
 
-/* 4.4 */
+/* Select all classes with the suffix "-text" to follow the same typography rules */
 [class*="-text"] {
      font-weight: 700;
      font-size: 1.75rem;
@@ -369,7 +370,6 @@ li:focus .sub-menu__extend,
      }
 }
 
-/* 4.6 */
 .main__reservation-section {
      background-image: url(../img/mobile/banquet-mobile.jpg);
      background-size: cover;
@@ -378,6 +378,7 @@ li:focus .sub-menu__extend,
 @media (min-width: 40em) {
      .main__reservation-section {
           background-image: url(../img/tablet/banquet-tablet.jpg);
+          padding: 4em 8em;
      }
 }
 @media (min-width: 75em) {
@@ -387,13 +388,11 @@ li:focus .sub-menu__extend,
      }
 }
 
-/* 4.6.1 */
 .main__reservation-section *,
 .private-dining-modal-form * {
      font-family: var(--font-2);
 }
 
-/* 4.7 */
 .reservation-form {
      background-color: var(--grey-19);
      box-shadow: var(--half-em) var(--half-em) var(--half-em) var(--black-3);
@@ -401,7 +400,7 @@ li:focus .sub-menu__extend,
      padding: 1em;
 }
 
-/* 4.7.1 */
+/* Insert input items into the grid in this order */
 .inner-reservation-form {
      display: grid;
      gap: 1em;
@@ -433,7 +432,7 @@ li:focus .sub-menu__extend,
      }
 }
 
-/* Start 4.8 -- All the below selectors represent a specific grid item of the reservation-form element*/
+/* All the below selectors represent a specific grid item of the above inner-reservation-form element*/
 .reservation-title {
      grid-area: reservation-title;
      text-align: center;
@@ -471,10 +470,10 @@ li:focus .sub-menu__extend,
           font-size: 1.1rem;
      }
 }
-@media (min-width: 75em) {
-     .reservation-text {
-          font-size: 1.3rem;
-     }
+
+.reservation-text a:hover {
+     text-shadow: 1px 1px 2px var(--black-3);
+     color: var(--white-90);
 }
 
 .reservation-button {
@@ -491,9 +490,19 @@ li:focus .sub-menu__extend,
           font-size: 1.25rem;
      }
 }
-/* End 4.8 */
 
-/* 4.9 */
+.reservation-button:hover {
+     background-color: var(--black-3);
+     color: var(--white-100);
+}
+.reservation-button:active {
+     background-color: var(--black-0);
+     color: var(--white-90);
+}
+
+/* End */
+
+/* Place menu images/links in grid layout */
 .menu-grid {
      display: grid;
      gap: 1em;
@@ -506,25 +515,36 @@ li:focus .sub-menu__extend,
      margin-bottom: 1.5em;
      padding: 2em 1em;
 }
+@media (min-width: 40em) {
+     .menu-grid {
+          gap: 2em;
+     }
+}
+/* Change the grid area for desktop viewport */
+@media (min-width: 75em) {
+     .menu-grid {
+          gap: 3em;
+          grid-template-areas:
+               "image-1 image-2"
+               "image-3 image-4"
+               "image-5 image-4";
+     }
+}
 
-/* 4.10 */
 .menu-article {
      font-size: 1.5rem;
      padding: 1em 1em 0 1em;
 }
 
-/* 4.11 */
 .menu-title {
      padding-bottom: 1em;
 }
 
-/* 4.12 */
 .menu-title,
 .menu-text {
      text-shadow: 1px 1px 1px var(--black-3);
 }
 
-/* 4,13 */
 .menu-grid > a {
      position: relative;
 }
@@ -539,26 +559,41 @@ li:focus .sub-menu__extend,
      }
 }
 
-/* 4.14 */
+.menu-grid a:hover {
+     opacity: 0.7;
+}
+
+/* Style the pseudo elements for the menu elements */
 .menu-grid > a::after {
-     bottom: 0;
+     bottom: var(--half-em);
      color: var(--black-3);
      font-family: var(--font-2);
      font-size: 1.75rem;
-     left: 0;
-     padding: var(--half-em) 1em;
+     left: var(--half-em);
+     padding: var(--quarter-em) var(--half-em);
      position: absolute;
+     border-left: 2px solid var(--black-3);
 }
 @media (min-width: 40em) {
      .menu-grid > a::after {
-          font-size: 3rem;
+          font-size: 2rem;
+     }
+}
+@media (min-width: 75em) {
+     .menu-grid > a::after {
+          font-size: 2rem;
+          top: 0;
+          border-left: none;
      }
 }
 
+/* Assign a different color for the pseudo element text for contrast purposes*/
 .menu-grid a:nth-child(2n)::after {
      color: var(--white-100);
+     border-color: var(--white-100);
 }
 
+/* The below selectors assign the images to the grid area and set the content of each pseudo element */
 .image-1 {
      grid-area: image-1;
 }
@@ -598,6 +633,7 @@ li:focus .sub-menu__extend,
 .image-5::after {
      content: "Dessert";
 }
+/* End */
 
 /* Force all images of the menu-grid to be the height of their grid-row, but also make their images cover as not to be stretched*/
 .menu-grid img {
@@ -605,7 +641,6 @@ li:focus .sub-menu__extend,
      min-height: 100%;
 }
 
-/* ||| */
 .main__private-dining-section {
      background-image: url(../img/mobile/dining-mobile.jpg);
      background-size: cover;
@@ -614,6 +649,7 @@ li:focus .sub-menu__extend,
 @media (min-width: 40em) {
      .main__private-dining-section {
           background-image: url(../img/tablet/dining-tablet.jpg);
+          padding: 4em 8em;
      }
 }
 @media (min-width: 75em) {
@@ -636,13 +672,22 @@ li:focus .sub-menu__extend,
      text-shadow: 1px 1px 1px var(--black-3);
 }
 
+.private-dining-button:hover {
+     color: var(--black-3);
+     background-color: var(--white-100);
+}
+
+.private-dining-button:active {
+     color: var(--black-0);
+     background-color: var(--white-90);
+}
+
 @media (min-width: 40em) {
      .private-dining-button {
           font-size: 1.25rem;
      }
 }
 
-/* ||| */
 .main__hours-section {
      background-image: url(../img/mobile/clock-mobile.jpg);
      background-size: cover;
@@ -706,9 +751,15 @@ li:focus .sub-menu__extend,
      overflow: auto;
      padding: 1em 0 0 0;
 }
+@media (min-width: 40em) {
+     .iframe {
+          padding: 10em;
+          margin-top: -4em;
+     }
+}
 @media (min-width: 75em) {
      .iframe {
-          padding: 18em 18em 18em 18em;
+          padding: 18em;
           margin-top: -12em;
      }
 }
@@ -773,48 +824,14 @@ li:focus .sub-menu__extend,
      padding-left: 2em;
 }
 
-/******************************************************************************
-6. Utility Classes
-******************************************************************************/
-
-/* Utility class consistent from Bootstrap framework that hides content, while keeping it within screen-reader accessability. This is mainly to apply to text labels. */
-.sr-only {
-     position: absolute;
-     width: 1px;
-     height: 1px;
-     padding: 0;
-     margin: -1px;
-     overflow: hidden;
-     clip: rect(0, 0, 0, 0);
-     white-space: nowrap;
-     border: 0;
-}
-
-.back-to-top {
-     background-color: var(--black-3);
-     bottom: 1em;
-     box-shadow: 0px 0px 1px 2px var(--white-100-op);
-     padding: var(--half-em);
-     position: fixed;
-     right: 1em;
-     z-index: 1; /*Needs to be in front of all default elements*/
-}
-@media (min-width: 40em) {
-     .back-to-top {
-          padding: 1em;
-     }
-}
-
-.back-to-top i {
-     font-size: 1.5em;
-}
-
-.hide {
-     display: none;
+.footer-logo:hover,
+#mailto:hover,
+.social-media li:hover {
+     opacity: 0.7;
 }
 
 /******************************************************************************
-7. Animation
+6. Animation
 ******************************************************************************/
 
 /* The header-menu__items element will use this animation to "drop" onto the page with style*/
@@ -850,17 +867,7 @@ li:focus .sub-menu__extend,
      }
 }
 
-@keyframes swoopOut {
-     0% {
-          transform: translateX(0);
-     }
-
-     100% {
-          transform: translateX(35em);
-     }
-}
-
-/* 7.1 elements will be "hidden" by the 90deg start position but will become fully visible after the animation is done*/
+/* Sub-menu Elements will be "hidden" by the 90deg start position but will become fully visible after the animation is done*/
 @keyframes rollDown {
      0% {
           transform: rotateX(90deg);
@@ -870,34 +877,7 @@ li:focus .sub-menu__extend,
      }
 }
 
-.inner-welcome-section {
-     position: relative;
-     background-color: var(--black-0);
-}
-
-.welcome-article {
-     position: absolute;
-     z-index: 1; /*This needs to be in front of any img element siblings within its parent container*/
-     background-color: var(--black-3-op);
-     min-height: 100%;
-     width: 100%;
-     display: grid;
-     align-items: center;
-}
-
-.inner-welcome-article {
-     text-align: center;
-}
-@media (min-width: 75em) {
-     .inner-welcome-article {
-          padding: 0 18em;
-     }
-}
-
-.inner-welcome-section > img {
-     animation: fadeAway 9s ease-in;
-}
-
+/* Animation used for the slideshow fo images at the top of the page */
 @keyframes fadeAway {
      0% {
           opacity: 0.1;
@@ -914,6 +894,15 @@ li:focus .sub-menu__extend,
           opacity: 0.1;
      }
 }
+
+/* Javascript adds this class to elements dynamically */
+.swoop-in-animation {
+     animation: swoopIn 1s cubic-bezier(0.68, -0.55, 0, 1.32); /*custom bezier function gives a "bounce" effect at the end of the animation*/
+}
+
+/******************************************************************************
+7. Modals
+******************************************************************************/
 
 /* Modal container for private dining */
 .private-dining-modal-container {
@@ -945,6 +934,9 @@ li:focus .sub-menu__extend,
      display: block;
      position: fixed;
 }
+.close-private-dining i:hover {
+     font-size: 2.5em;
+}
 
 .close-private-dining i {
      font-size: 2em;
@@ -955,6 +947,11 @@ li:focus .sub-menu__extend,
      flex-direction: column;
      text-align: center;
      padding: 2em 1em;
+}
+@media (min-width: 75em) {
+     .private-dining-modal-article p {
+          font-size: 2rem;
+     }
 }
 
 .private-dining-modal-title {
@@ -983,6 +980,11 @@ li:focus .sub-menu__extend,
      color: var(--white-100);
      padding: 1em 0;
 }
+.private-dining-modal-button:hover {
+     color: var(--black-3);
+     background-color: var(--white-100);
+     border-color: var(--black-3);
+}
 
 #private-dining-name {
      grid-area: private-dining-name-input;
@@ -999,8 +1001,6 @@ li:focus .sub-menu__extend,
 #private-dining-message {
      grid-area: private-dining-message-input;
 }
-
-/* ||| */
 
 .newsletter-modal {
      position: relative;
@@ -1048,12 +1048,4 @@ li:focus .sub-menu__extend,
 .res-success div {
      padding: var(--half-em);
      background-color: black;
-}
-
-.swoop-in-animation {
-     animation: swoopIn 1s cubic-bezier(0.68, -0.55, 0, 1.32); /*custom bezier function gives a "bounce" effect at the end of the animation*/
-}
-
-.swoop-out-animation {
-     animation: swoopOut 1s cubic-bezier(0.68, -0.55, 0, 1.32);
 }

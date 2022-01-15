@@ -82,6 +82,7 @@ window.addEventListener("load", () => {
      resSubmit.addEventListener("click", submitForm);
      subMenuContact.addEventListener("click", toggleSubMenu);
      subMenuMenus.addEventListener("click", toggleSubMenu);
+     body.addEventListener("click", submitPrivateDining); // needs event delegation
 });
 
 // Load all DOMContentLoaded events
@@ -91,7 +92,6 @@ function loadDOMContentLoadedEventListeners() {
      document.addEventListener("DOMContentLoaded", imageSourceChange);
      document.addEventListener("DOMContentLoaded", setCurrentTime(getTime));
      document.addEventListener("load", () => {
-          body.addEventListener("click", submitPrivateDining); // needs event delegation
           loadResizeEventListeners();
           loadInputEventListeners();
      });
@@ -108,6 +108,25 @@ function loadInputEventListeners() {
      reservationDate.addEventListener("input", checkClosedDays);
 }
 
+// If the "menus", "contact us", "location" or "email" links in the main-nav are clicked, the toggleMenu() function needs to the invoked in order to show the section of the page the link has been directed to. Otherwise the nav-bar would not close and obstruct the section from the user.
+document
+     .querySelector(".menus-nav-element")
+     .addEventListener("click", (event) => {
+          toggleMenu();
+     });
+document.querySelector(".contact-us").addEventListener("click", (event) => {
+     toggleMenu();
+});
+document.querySelector(".email").addEventListener("click", (event) => {
+     toggleMenu();
+     let email = document.querySelector("#mailto");
+     email.style.color = "var(--grey-43)";
+     setTimeout(() => (email.style.color = "var(--white-100)"), 3000);
+});
+document.querySelector(".location").addEventListener("click", (event) => {
+     toggleMenu();
+});
+
 /******************************************************************************
 3. Global Functions
 ******************************************************************************/
@@ -117,9 +136,7 @@ function toggleMenu() {
      if (!headerMenu.classList.contains("menu-open")) {
           headerMenu.classList.add("menu-open");
           headerMenuItems.classList.add("swoop-in-animation");
-          headerMenuItems.classList.remove("swoop-out-animation");
      } else {
-          headerMenuItems.classList.add("swoop-out-animation");
           headerMenuItems.classList.remove("swoop-in-animation");
           subMenuMenus.parentElement.children[1].classList.remove(
                "sub-menu-open"
@@ -127,10 +144,6 @@ function toggleMenu() {
           subMenuContact.parentElement.children[1].classList.remove(
                "sub-menu-open"
           );
-          headerMenu.addEventListener("animationend", () => {
-               //||| needs a closer look with event delegation bubbling. headerMenuItems animation end is interrupting its parent animation
-               // console.log("animation");
-          });
           headerMenu.classList.remove("menu-open");
      }
 }
@@ -192,13 +205,19 @@ function createNewsletterElements() {
 }
 
 function setNewsletterModalContainer() {
+     let width = window.innerWidth;
+     let padding;
+     if (width > 640 && width < 1200) {
+          padding = "2em";
+     } else if (width >= 1200) {
+          padding = "3em";
+     }
      newsletterModalContainer.innerHTML = `
-    <section class="newsletter-modal">
+    <section class="newsletter-modal" style="padding:${padding}">
         <button class="close-newsletter">
             <i class="fas fa-times"></i>
         </button>
         <h1>Want to hear more about Mehr? Read our <a href="./src/links/newsletter.html">Newsletter</a>!</h1>
-
     </section>`;
 }
 
@@ -300,7 +319,7 @@ function setPrivateDiningModalContainer() {
                 </label>
                 <textarea id="private-dining-message" class="private-dining-message-input" rows="10" placeholder="Tell us about your special event!"></textarea>
             </form>
-            <button class="private-dining-modal-button">
+            <button class="private-dining-modal-button" style="width: 40%; align-self: center">
                 Submit
             </button>
         </article>
@@ -344,7 +363,7 @@ function calcMapSize() {
      iFrame.setAttribute("width", iFrameWidth);
 }
 
-// this function runs when the screen width changes, and will make sure that images are sourcing depending on the media query (ie. between mobile, tablet, and desktop).
+// this function runs when the screen width changes, and will make sure that images are sourced correctly depending on the media query (ie. between mobile, tablet, and desktop).
 function imageSourceChange() {
      let width = window.innerWidth;
      let wine = document.querySelector(".wine");
@@ -365,6 +384,7 @@ function imageSourceChange() {
           takeout,
           dessert,
      ];
+     // tablet
      if (width > 640 && width < 1200) {
           imageArray.forEach((img) => {
                let className;
@@ -375,6 +395,7 @@ function imageSourceChange() {
                }
                img.src = `./img/tablet/${className}-tablet.jpg`;
           });
+          //desktop
      } else if (width >= 1200) {
           imageArray.forEach((img) => {
                let className;
@@ -405,6 +426,7 @@ function checkClosedDays(event) {
      }
 }
 
+// forms submission when the private dining modal button is clicked. It looks to validate user inputs as well
 function submitPrivateDining(event) {
      if (event.target.classList.contains("private-dining-modal-button")) {
           // convert the HTML collection into an array and filter for the proper input fields
@@ -459,11 +481,11 @@ function submitPrivateDining(event) {
                // set this popup to last for
                setTimeout(removeReservationSuccess, 7000);
           }
+          event.preventDefault();
      }
-     event.preventDefault();
 }
 
-// Checks that the form fields are valid before "submitting" to a fake server. Also checks for validation and uses reg exp.
+// Checks that the form fields are valid before "submitting" data. Also checks for validation and uses reg exp.
 function submitForm(event) {
      // convert the HTML collection into an array and filter for the proper input fields
      const formElements = Array.from(
@@ -520,10 +542,13 @@ function submitForm(event) {
      }
      event.preventDefault();
 }
+
+// grab all elements of the body except for the reservation success message
 let background = Array.from(body.children).filter((element) => {
      return !element.classList.contains("res-success");
 });
 
+// when invoked, this function resets the opacity of all elements and resets all input values for the form
 function removeReservationSuccess() {
      background.forEach((element) => {
           element.style.opacity = "1";
@@ -537,16 +562,20 @@ function removeReservationSuccess() {
      resPhone.value = "";
 }
 
+// upon successful form input, data will be outputted to the screen.
 function reservationSuccess(data) {
+     let width = window.innerWidth;
      let name = data.name;
      let src = data.src;
      reservationSuccessOutput = document.createElement("div");
+     // if users filled out the reservation section, output this
      if (src === "reservation") {
           reservationSuccessOutput.innerHTML = `
           <div>
                <p>Thank-you ${name}!</p>
                <p>Your Reservation has been booked!</p>
           </div>`;
+          // if users filled out the private dining section, output this instead
      } else {
           reservationSuccessOutput.innerHTML = `
           <div>
@@ -556,8 +585,17 @@ function reservationSuccess(data) {
      }
      body.append(reservationSuccessOutput);
      reservationSuccessOutput.classList.add("res-success");
+     // fix some padding issues with desktop so that the message is clearly shown
+     if (width >= 1200) {
+          reservationSuccessOutput.style.top = "50%";
+          reservationSuccessOutput.style.paddingBottom = "0px";
+          reservationSuccessOutput.style.paddingTop = "0px";
+     }
+     // display:none for the private dining modal so users can't interact with it as the message is showing
+     reservationSuccessOutput.previousElementSibling.style.display = "none";
      background.forEach((element) => {
           element.style.opacity = "0.5";
      });
+     //hide the back-to-top button
      toggleBackToTop();
 }
