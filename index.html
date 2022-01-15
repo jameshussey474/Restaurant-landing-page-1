@@ -56,10 +56,14 @@
                     <nav class="header-menu">
                          <ul class="header-menu__items">
                               <li>
-                                   <a href="about.html">About</a>
+                                   <a href="./src/links/about.html">About</a>
                               </li>
                               <li class="sub-menu sub-menu__menus">
-                                   <a>Menus</a>
+                                   <a
+                                        class="menus-nav-element"
+                                        href="#main__menu-section"
+                                        >Menus</a
+                                   >
                                    <ul class="sub-menu__extend">
                                         <li>
                                              <a
@@ -99,16 +103,21 @@
                                    >
                               </li>
                               <li class="sub-menu sub-menu__contact">
-                                   <!-- Add in the href for desktop -->
-                                   <a>Contact Us</a>
+                                   <a class="contact-us" href="#main__footer"
+                                        >Contact Us</a
+                                   >
                                    <ul class="sub-menu__extend">
                                         <li>
-                                             <a href="#bottom-section__map"
+                                             <a
+                                                  class="location"
+                                                  href="#bottom-section__map"
                                                   >Location</a
                                              >
                                         </li>
                                         <li>
-                                             <a href="#mailto">Email Us</a>
+                                             <a class="email" href="#mailto"
+                                                  >Email Us</a
+                                             >
                                         </li>
                                         <li>
                                              <a href="./src/links/reviews.html"
@@ -116,7 +125,7 @@
                                              >
                                         </li>
                                         <li>
-                                             <a href="#" class="newsletter"
+                                             <a class="newsletter"
                                                   >Newsletter</a
                                              >
                                         </li>
@@ -133,14 +142,14 @@
                                         Welcome to Mehr!
                                    </h2>
                                    <p class="welcome-text">
-                                        Lorem, ipsum dolor sit amet consectetur
-                                        adipisicing elit.
+                                        Serving extraordinary German cuisine
+                                        since 1979, we welcome you to our
+                                        vibrant and hospitable location.
                                    </p>
                                    <p class="welcome-text">
-                                        Aliquid magni repellat odit sint
-                                        distinctio quas enim facilis obcaecati
-                                        sed tenetur quia, autem quo eum
-                                        molestias?
+                                        We promise you'll be wanting "Mehr"
+                                        while indulging in our authenticity,
+                                        etiquette, and taste!
                                    </p>
                               </div>
                          </article>
@@ -242,22 +251,22 @@
                               <p class="reservation-text">
                                    * Please note that all reservations are
                                    allocated a maximum time limit of 2 hrs. If
-                                   you would like to stay longer, schedule a
+                                   you would like to stay longer, please
+                                   schedule a
                                    <a href="#main__private-dining-section"
                                         >private dining experience</a
-                                   >
-                                   .
+                                   >.
                               </p>
                          </form>
                     </section>
-                    <section class="main__menu-section">
+                    <section id="main__menu-section" class="main__menu-section">
                          <article class="menu-article">
                               <h2 class="menu-title">Our Menus</h2>
                               <p class="menu-text">
-                                   Lorem, ipsum dolor sit amet consectetur
-                                   adipisicing elit. Labore, adipisci tempore
-                                   fugit impedit harum incidunt velit cum
-                                   provident.
+                                   At Mehr, we offer an exciting array of both
+                                   classic and modern German cuisine. Explore
+                                   our menus below to view our luxurious
+                                   creations.
                               </p>
                          </article>
                          <div class="menu-grid">
@@ -323,11 +332,11 @@
                                    Just the Occasion
                               </h2>
                               <p class="private-dining-text">
-                                   Ipsam nam quas esse repellat maxime,
-                                   similique quia est tenetur eos, temporibus
-                                   pariatur? In et rerum atque commodi, facilis,
-                                   quisquam, eius sequi nihil eos fugit officia
-                                   totam quasi recusandae sint eligendi.
+                                   Celebrating life's greatest achievements and
+                                   milestones is a must. From weddings to
+                                   business meetings to personal
+                                   accomplishments, let us at Mehr cater to your
+                                   event's every need.
                               </p>
                               <button
                                    type="button"
@@ -371,7 +380,7 @@
                          </section>
                     </section>
                </div>
-               <footer class="main__footer">
+               <footer id="main__footer" class="main__footer">
                     <section class="footer-section">
                          <a href="#" title="footer-logo">
                               <img
